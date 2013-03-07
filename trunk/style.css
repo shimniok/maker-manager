@@ -1,0 +1,158 @@
+/**
+ * Button sprites
+ */
+img.add { background: url('images/icons.png') no-repeat 0px 0px; width: 22px; height: 23px; vertical-align: middle; }
+img.add:hover { background: url('images/icons.png') no-repeat 0x -23px; width: 22px; height: 23px; vertical-align: middle; }
+
+img.del { background: url('images/icons.png') no-repeat -22px 0px; width: 22px; height: 23px; vertical-align: middle; }
+img.del:hover { background: url('images/icons.png') no-repeat -22px -23px; width: 22px; height: 23px; vertical-align: middle; }
+
+img.save { background: url('images/icons.png') no-repeat -44px 0px;	width: 22px; height: 23px; vertical-align: middle; }
+img.save:hover { background: url('images/icons.png') no-repeat -44px -23px; width: 22px; height: 23px; vertical-align: middle; }
+
+img.cancel { background: url('images/icons.png') no-repeat -66px 0px; width: 22px; height: 23px; vertical-align: middle; }
+img.cancel:hover { background: url('images/icons.png') no-repeat -66px -23px; width: 22px; height: 23px; vertical-align: middle; }
+
+img.edit { background: url('images/icons.png') no-repeat -88px 0px; width: 22px; height: 23px; vertical-align: middle; }
+img.edit:hover { background: url('images/icons.png') no-repeat -88px -23px; width: 22px; height: 23px; vertical-align: middle; }
+
+img.trash { background: url('images/icons.png') no-repeat -110px 0px; width: 22px; height: 23px; vertical-align: middle; }
+img.trash:hover { background: url('images/icons.png') no-repeat -110px -23px; width: 22px; height: 23px; vertical-align: middle; }
+
+/**
+ * Debug
+ */
+#debug { position: absolute; top: 0; padding: 0 0 0 0; }
+
+/**
+ * Header
+ */
+#header { position: absolute; top: 0; padding: 0 0 0 0; font-family: Arial; }
+#header h1 { font-size: 38pt; color: black; }
+#header h2 { font-size: 24pt; padding: 10px 0 0 0; }
+
+/**
+ * Links
+ */
+a { text-decoration: none; color: grey; }
+
+a:hover { color: #000000; border-bottom: 1px dotted grey; }
+
+/**
+ * Menu
+ */
+#nav { position: absolute; top: 0; width: 756px; padding: 85px 0 0 0; height: 40px; top: -6px; }
+#nav ul { list-style: none; background: rgba(0,0,0,0.5); padding: 5px 0 5px 0;}
+#nav ul li { display: inline; padding: 5px; margin: 0 0 1px 0; }
+#nav ul li a { text-decoration: none; font: italic 16px Baskerville, Georgia, Serif; color: white; }
+#nav ul li:hover { background: rgb(200,200,200); }
+
+/**
+ * Main
+ */
+#main { position: absolute; top: 0; padding: 180px 0 40px 40px; }
+#main table { font: 12pt Georgia, Baskerville, Serif; }
+#bom-header { position: absolute; right: 0; top: 0; padding: 120px 0 0 0; font: bold italic 18pt Georgia, Baskerville, Serif; }
+
+/**
+ * Tables
+ */
+
+table {
+    *border-collapse: collapse; /* IE7 and lower */
+    border-spacing: 0;
+    width: 100%;    
+}
+
+.bordered {
+    border: solid #ccc 1px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 1px 1px #ccc; 
+    -moz-box-shadow: 0 1px 1px #ccc; 
+    box-shadow: 0 1px 1px #ccc;         
+}
+
+.bordered tr:hover {
+    background: #fbf8e9;
+    -o-transition: all 0.1s ease-in-out;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;     
+}    
+    
+.bordered td, .bordered th {
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;    
+}
+
+.bordered th, .bordered tfoot {
+    background-color: #dce9f9;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
+    background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:    -moz-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:     -ms-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:      -o-linear-gradient(top, #ebf3fc, #dce9f9);
+    background-image:         linear-gradient(top, #ebf3fc, #dce9f9);
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; 
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
+    border-top: none;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5); 
+}
+
+.bordered td:first-child, .bordered th:first-child {
+    border-left: none;
+}
+
+.bordered th:first-child {
+    -moz-border-radius: 6px 0 0 0;
+    -webkit-border-radius: 6px 0 0 0;
+    border-radius: 6px 0 0 0;
+}
+
+.bordered th:last-child {
+    -moz-border-radius: 0 6px 0 0;
+    -webkit-border-radius: 0 6px 0 0;
+    border-radius: 0 6px 0 0;
+}
+
+.bordered th:only-child {
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius: 6px 6px 0 0;
+}
+
+.bordered tr:last-child td:first-child {
+    -moz-border-radius: 0 0 0 6px;
+    -webkit-border-radius: 0 0 0 6px;
+    border-radius: 0 0 0 6px;
+}
+
+.bordered tr:last-child td:last-child {
+    -moz-border-radius: 0 0 6px 0;
+    -webkit-border-radius: 0 0 6px 0;
+    border-radius: 0 0 6px 0;
+}
+
+.bordered td, .bordered th {
+    padding: 10px;
+    border-bottom: 1px solid #f2f2f2;    
+}
+
+.bordered tbody tr:nth-child(even) {
+    background: #f5f5f5;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; 
+    -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
+    box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
+}
+
+td.centered, th.centered {
+	text-align: center;
+}
+
+
