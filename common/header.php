@@ -3,17 +3,18 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
-    <title>Maker Manager | <?php echo $pageTitle ?></title>
+    <title>MakerMRP | <?php echo $pageTitle ?></title>
 
     <link rel="stylesheet" href="style.css" type="text/css" />
     <link rel="shortcut icon" type="image/x-icon" href="http://cdn.css-tricks.com/favicon.ico" />
 
-    <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js?ver=1.3.2'></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 
 <body>
+    <script src="js/jquery.inline.edit.js" type="text/javascript"></script>
     <div id="page-wrap">
         <div id="header">
-            <h1><a href="/inv">Maker Manager</a></h1>
+            <h1><a href="/inv">MakerMRP</a></h1>
             <h2><?php echo $pageTitle ?></h2>
         </div>
