@@ -1,140 +1,142 @@
+<script type='text/javascript'>actionUrl="bom.action.php";</script>
 <?php
+/**
+ * bom.php - display list of products and associated parts, editable
+ * 
+ * @author Michael Shimniok
+ */
 include_once "common/base.php";
 $pageTitle="BOM";
 include_once "common/header.php"; 
-?>
+include_once 'inc/data.inc.php';
 
-<div id="main">
+$prodList = $prod->load();
+$bomList = $bom->load();
+$partList = $part->load();
+$typeList = $type->load();
+$subTypeList = $subtype->load();
 
-	<noscript>This site just doesn't work, period, without JavaScript</noscript>
-<?php
-	include_once 'inc/class.products.inc.php';
-	$prod = new Products($db);
-	$prod->load();
-	include_once 'inc/class.bom.inc.php';
-    $bom = new BOM($db);
-	if ( isset($_GET['mode']) ) {
-	    switch($_GET['mode']) {
-			case 'add' :
-				$bom->add($_GET['products_id'], $_GET['parts_id'], $_GET['qty']);
-				break;
-			case 'edit' :
-				$bom->update($_GET['products_id'], $_GET['parts_id'], $_GET['qty']);
-				break;
-			case 'delete' :
-				$bom->del($_GET['products_id'], $_GET['parts_id']);
-				break;				
+$data = array(
+	'main' => null, // will be filled in with product_id-specific partlist
+	'bom' => $bomList,
+	'parts' => $partList,
+	'types' => $typeList,
+	'subtypes' => $subTypeList
+);
+
+$metadata = array(
+	'partNo' => array( 'title' => 'Part No.', 'edit' => true ), 
+	'footprint' => array( 'title' => 'Footprint', 'edit' => true ),  
+	'value' => array( 'title' => 'Value', 'edit' => true ),  
+	'voltage' => array( 'title' => 'Voltage', 'edit' => true ),  
+	'tolerance' => array( 'title' => 'Tolerance', 'edit' => true ),
+	'types_id' => array( 'title' => 'Type', 'edit' => true, 'table' => 'types', 'key' => 'types_id', 'col' => 'name' ),
+	'subtypes_id' => array( 'title' => 'Subtype', 'edit' => true, 'table' => 'subtypes', 'key' => 'subtypes_id', 'col' => 'name' )
+);
+
+// Generate a the part selector pulldown thingy ahead of time
+$partSelector = "<select name='parts_id'>";
+foreach ($partList as $id => $part) {
+	$partSelector .= "<option id='".$id."' value='".$id."'>";
+	foreach ($metadata as $col => $meta) {
+		// If a table lookup is specified, do the lookup,
+		// otherwise just print out the row value directly
+		if (isset($meta['table'])) {
+			$table = $data[$meta['table']]; // table to be looked up
+			$key = $part[$meta['key']]; // fkey value in main table
+			$fcol = $meta['col']; // foreign column name
+			$partSelector .= $table[$key][$fcol];
+		} else {
+			$partSelector .= $part[$col]." ";
 		}
+		$partSelector .= " ";
 	}
-    $bomentries = $bom->load($_GET['products_id']);
+	$partSelector .= "</option>";
+}
+$partSelector .= "</select>";
 
-	// List products
-	include_once 'inc/class.parts.inc.php';
-	$part = new Parts($db);
-	$entries = $part->load();
-
-	include_once 'inc/class.types.inc.php';
-	$type = new Types($db);
-	$type->load();
-	
-	include_once 'inc/class.subtypes.inc.php';
-	$subtype = new Subtypes($db);
-	$subtype->load();
-
-	// Print out name of the product
 ?>
-	<h3 id='bom-header'><?php echo $prod->lookup($_GET['products_id']); ?></h3>
-	<table class='bordered'>
-		<tr>
-			<th class='centered'>Qty</th>
-			<th>Part No.</th>
-			<th>Footprint</th>
-			<th>Value</th>
-			<th>Voltage</th>
-			<th>Tolerance</th>
-			<th>Type</th>
-			<th>SubType</th>
-			<th class='centered'>Action</th>
-		</tr>
-<?php foreach ($bomentries as $entry) {
-		$p = $part->lookup($entry['parts_id']); ?>
-			<tr>
-			<td>
-				<form action='' method='GET'>
-				<input type='hidden' name='mode' value='edit'/>
-				<input type='hidden' name='parts_id' value='<?php echo $entry['parts_id'] ?>'/>
-				<input type='hidden' name='products_id' value='<?php echo $entry['products_id'] ?>'/>
-				<input type='text' name='qty' size='2' value='<?php echo $entry['qty'] ?>'/>
-				<input type='submit' value='update'/>
-				<!--
-				<img class='edit' alt='update' src='images/transparent.png'/>
-				<img class='save' alt='update' src='images/transparent.png'/>
-				<img class='cancel' alt='update' src='images/transparent.png'/>
-				-->
-				</form>
-			</td>
-			<td><?php echo $p['partNo']; ?></td>
-			<td><?php echo $p['footprint']; ?></td>
-			<td><?php echo $p['value']; ?></td>
-			<td><?php echo $p['voltage']; ?></td>
-			<td><?php echo $p['tolerance']; ?></td>
-			<td><?php echo $type->lookup($p['types_id']); ?></td>
-			<td><?php echo $subtype->lookup($p['subtypes_id']); ?></td>
-			<td>
-				<form action='' method='GET'>
-				<input type='hidden' name='mode' value='delete'/>
-				<input type='hidden' name='parts_id' value='<?php echo $entry['parts_id'] ?>'/>
-				<input type='hidden' name='products_id' value='<?php echo $entry['products_id'] ?>'/>
-				<input type='submit' value='delete'/>
-				</form>
-			</td>
-		</tr>
-<?php } ?>
+
+
+<!-- Display a select list of all the products. Display the BOM for the selected product. -->
+<div id="main">
+	<ul> <?php 
+	foreach ( $prodList as $pr_id => $prod ) { ?>
+	<li class="bom" id="<?php echo $pr_id ?>"><?php echo $prod['name']; ?>
+		<table class='bordered'>
+		<thead>
+			<tr><th><ul> 
+			<li class='qty'>Qty</li><?php
+			foreach ( $metadata as $col => $meta ) {
+				echo "<li class='".$col."'>".$meta['title']."</li>";			
+			} ?>
+			</ul></th></tr>
+		</thead>
+		<tbody>
+			<?php
+			// Loop thru list of bom items looking for match to current product id
+			foreach ( $data['bom'] as $bom_id => $bom) {
+				// if current product id matches bom array id entry
+				if ( $pr_id == $bom['products_id'] ) {
+					// list part details
+					$pid = $bom['parts_id'];
+					$part = $data['parts'][$pid];?>
+					<tr><td><form><ul>
+						<li class='qty'>
+						<span class='text'><?php echo $bom['qty']; ?></span>
+						<span class='edit'>
+							<input type='text' class='qty' value='<?php echo $bom['qty']; ?>' name='qty'/>
+						</span>
+						</li><?php
+					foreach ($metadata as $col => $meta) {
+						// If a table lookup is specified, do the lookup,
+						// otherwise just print out the row value directly
+						$myval = '';
+						if (isset($meta['table'])) {
+							$table = $data[$meta['table']]; // table to be looked up
+							$key = $part[$meta['key']]; // fkey value in main table
+							$fcol = $meta['col']; // foreign column name
+							$myval = $table[$key][$fcol];
+						} else {
+							$myval = $part[$col];
+						}
+						echo "<li class='".$col."' value='".$pid."'>".$myval."</li>";
+					}?>
+					<li class='action'>
+						<span class='button'>
+							<input type='button' value='delete' class='delete'/>
+							<input type='hidden' value='<?php echo $bom_id; ?>' name='id' />
+							<input type='hidden' value='<?php echo $pr_id; ?>' name='products_id' />
+							<input type='hidden' value='<?php echo $pid; ?>' name='parts_id' />
+						</span>
+						<span class='edit'>
+							<input type='submit' value='submit' class='save'/>
+							<input type='button' value='cancel' class='cancel'/>
+						</span>
+					</li>
+					</ul></form></td></tr><?php
+				}
+			}?>
+			<!-- Add a new part -->
+			<tr id='last'><td><form class='bom-add'><ul>
+				<li class='qty'>
+					<input type='text' class='qty' name='qty' value='1'/>
+					<input type='hidden' name='products_id' value='<?php echo $prod['id']; ?>'/>
+				</li>
+				<li class='bom-select'><?php echo $partSelector; ?></li>
+				<li class='action'><input type='submit' value='bom-add' class='bom-add'/></li>
+			</ul></form></td></tr>
 		</tbody>
-		<tfoot>
-		<tr>
-			<form action="" id="add-new" method="GET"> 
-			<input type="hidden" name="mode" value="add" />
-			<input type="hidden" name="products_id" value="<?php echo $_GET['products_id'] ?>" />
-			<td><input type="text" name="qty" size=3 value='1' /></td>
-			<td colspan='7' class='centered'><select name='parts_id'>
-<?php 
-
-	/*
-	function sortByTypes($a, $b) {
-		echo $a['types_id']." =?= ".$b['types_id'];
-	    if ($a['types_id'] == $b['types_id']) {
-			return 0;
-    	}
-    	return ($a['types_id'] < $b['types_id']) ? -1 : 1;
-	}
-
-	// Try to group types and subtypes
-	usort($entries, sortByTypes);
-	*/
-
-	foreach ($entries as $entry) {
-		// Convert to formatter routine
-		$name = $type->lookup($entry['types_id']) . " " .
-				$subtype->lookup($entry['subtypes_id']) . " " .
-				$entry['value'] . " " .
-				$entry['voltage'] . " " .
-				$entry['footprint'] . " " .
-				$entry['tolerance'] . " " .
-				$entry['partNo'];
-		echo "<option value='".$entry['id']."'>".$name."</option>";
-	}
-?>	
-				</select>
-			</td>
-			<td class='centered'><input type="submit" id="add-new-submit" value="Add" class="button" /></td>
-			</form>
-		</tr>
-		</tfoot>
-	</table>
-
+		</table>
+	</li> <?php	
+	} ?>
+	</ul>
 </div>
 
-<?php include_once "common/menu.php"; ?>
+<?php
 
-<?php include_once "common/footer.php"; ?>
+//renderTable2($metadata, $data);
+
+include_once "common/menu.php";
+include_once "common/footer.php"; 
+?>
