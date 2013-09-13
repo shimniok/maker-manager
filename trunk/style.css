@@ -1,58 +1,123 @@
 /**
  * Button sprites
  */
-img.add { background: url('images/icons.png') no-repeat 0px 0px; width: 22px; height: 23px; vertical-align: middle; }
-img.add:hover { background: url('images/icons.png') no-repeat 0x -23px; width: 22px; height: 23px; vertical-align: middle; }
 
-img.del { background: url('images/icons.png') no-repeat -22px 0px; width: 22px; height: 23px; vertical-align: middle; }
-img.del:hover { background: url('images/icons.png') no-repeat -22px -23px; width: 22px; height: 23px; vertical-align: middle; }
+input[type='button'], input[type='submit'] {
+	width: 22px; 
+	height: 23px; 
+	margin: 0 -25px 0 0;
+	vertical-align: middle; 
+	border: none;
+	color: transparent;
+}
 
-img.save { background: url('images/icons.png') no-repeat -44px 0px;	width: 22px; height: 23px; vertical-align: middle; }
-img.save:hover { background: url('images/icons.png') no-repeat -44px -23px; width: 22px; height: 23px; vertical-align: middle; }
+form input[type='text'], form input[type='text']:hover {
+	background: none;
+}
 
-img.cancel { background: url('images/icons.png') no-repeat -66px 0px; width: 22px; height: 23px; vertical-align: middle; }
-img.cancel:hover { background: url('images/icons.png') no-repeat -66px -23px; width: 22px; height: 23px; vertical-align: middle; }
+input.sold { 
+	float: left; 
+	background: url('images/icons.png') no-repeat -352px 0px;
+}
+input.sold:hover { 
+	background: url('images/icons.png') no-repeat -352px -23px; 
+}
 
-img.edit { background: url('images/icons.png') no-repeat -88px 0px; width: 22px; height: 23px; vertical-align: middle; }
-img.edit:hover { background: url('images/icons.png') no-repeat -88px -23px; width: 22px; height: 23px; vertical-align: middle; }
+input.edit {
+	background: url('images/icons.png') no-repeat -88px 0px; 
+}
+input.edit:hover {
+	background: url('images/icons.png') no-repeat -88px -23px; 
+}
 
-img.trash { background: url('images/icons.png') no-repeat -110px 0px; width: 22px; height: 23px; vertical-align: middle; }
-img.trash:hover { background: url('images/icons.png') no-repeat -110px -23px; width: 22px; height: 23px; vertical-align: middle; }
+input.bom {
+	background: url('images/icons.png') no-repeat -374px -23px; 
+}
 
-/**
- * Debug
- */
-#debug { position: absolute; top: 0; padding: 0 0 0 0; }
+input.add, input.bom-add {
+	margin: 0;
+	background: url('images/icons.png') no-repeat 0px 0px; 
+}
+input.ordered, input.needed {
+	float: left;
+	background: url('images/icons.png') no-repeat 0px 0px; 
+}
+input.ordered:hover, input.needed:hover, input.add:hover, input.bom-add:hover {
+	background: url('images/icons.png') no-repeat 0px -23px; 
+}
+
+input.received, input.built {
+	float: left;
+	background: url('images/icons.png') no-repeat -264px 0px; 
+}
+input.received:hover, input.built:hover {
+	background: url('images/icons.png') no-repeat -264px -23px; 
+}
+
+input.save {
+	margin: 0;
+	background: url('images/icons.png') no-repeat -44px 0px;	
+}
+form input.save:hover {
+	background: url('images/icons.png') no-repeat -44px -23px; 
+}
+
+form input.cancel {
+	margin: 0;
+	background: url('images/icons.png') no-repeat -66px 0px; 
+}
+form input.cancel:hover {
+	background: url('images/icons.png') no-repeat -66px -23px; 
+}
+
+form input.delete {
+	margin: 0;
+	background: url('images/icons.png') no-repeat -22px 0px; 
+}
+form input.delete:hover {
+	background: url('images/icons.png') no-repeat -22px -23px; 
+}
+
 
 /**
  * Header
  */
-#header { position: absolute; top: 0; padding: 0 0 0 0; font-family: Arial; }
+#header { position: absolute; top: -30; padding: 0 0 0 0; font-family: Arial; }
 #header h1 { font-size: 38pt; color: black; }
-#header h2 { font-size: 24pt; padding: 10px 0 0 0; }
+#header h2 { font-size: 24pt; padding: 0; }
 
 /**
  * Links
  */
 a { text-decoration: none; color: grey; }
-
 a:hover { color: #000000; border-bottom: 1px dotted grey; }
 
 /**
  * Menu
  */
-#nav { position: absolute; top: 0; width: 756px; padding: 85px 0 0 0; height: 40px; top: -6px; }
+#nav { position: absolute; top: 0; width: 756px; padding: 55px 0 0 0; height: 40px; top: -6px; }
 #nav ul { list-style: none; background: rgba(0,0,0,0.5); padding: 5px 0 5px 0;}
-#nav ul li { display: inline; padding: 5px; margin: 0 0 1px 0; }
+#nav ul li { display: inline; padding: 5px 10px 5px 10px; margin: 0 0 1px 0; }
 #nav ul li a { text-decoration: none; font: italic 16px Baskerville, Georgia, Serif; color: white; }
 #nav ul li:hover { background: rgb(200,200,200); }
+
+#subnav { position: absolute; top: 0; width: 756px; padding: 120px 0 0 0; height: 40px; top: -6px; }
+#subnav ul { list-style: none; background: rgba(0,0,0,0.5); padding: 5px 0 5px 0;}
+#subnav ul li { display: inline; padding: 5px 10px 5px 10px; margin: 0 0 1px 0; }
+#subnav ul li a { text-decoration: none; font: italic 16px Baskerville, Georgia, Serif; color: white; }
+#subnav ul li:hover { background: rgb(200,200,200); }
 
 /**
  * Main
  */
-#main { position: absolute; top: 0; padding: 180px 0 40px 40px; }
-#main table { font: 12pt Georgia, Baskerville, Serif; }
-#bom-header { position: absolute; right: 0; top: 0; padding: 120px 0 0 0; font: bold italic 18pt Georgia, Baskerville, Serif; }
+#main { position: absolute; top: 0; padding: 140px 0 40px 40px; }
+#main table { font: 10pt Georgia, Baskerville, Serif; }
+
+/**
+ * BOM
+ */
+li.bom { font-size: 18pt; font-family: Arial; list-style: none; }
+li.bom table { margin-bottom: 40px; }
 
 /**
  * Tables
@@ -61,7 +126,6 @@ a:hover { color: #000000; border-bottom: 1px dotted grey; }
 table {
     *border-collapse: collapse; /* IE7 and lower */
     border-spacing: 0;
-    width: 100%;    
 }
 
 .bordered {
@@ -74,23 +138,22 @@ table {
     box-shadow: 0 1px 1px #ccc;         
 }
 
-.bordered tr:hover {
+.bordered tr:hover, .bordered tr:nth-child(even):hover {
     background: #fbf8e9;
     -o-transition: all 0.1s ease-in-out;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
     -ms-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;     
-}    
+} 
     
 .bordered td, .bordered th {
     border-left: 1px solid #ccc;
     border-top: 1px solid #ccc;
-    padding: 10px;
     text-align: left;    
 }
 
-.bordered th, .bordered tfoot {
+.bordered th, .bordered tr#last {
     background-color: #dce9f9;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
     background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
@@ -139,8 +202,13 @@ table {
     border-radius: 0 0 6px 0;
 }
 
-.bordered td, .bordered th {
-    padding: 10px;
+.bordered td {
+    padding: 2px 5px 2px 5px;
+    border-bottom: 1px solid #f2f2f2;    
+}
+
+.bordered th, .bordered tr#last td {
+    padding: 5px 5px 5px 5px;
     border-bottom: 1px solid #f2f2f2;    
 }
 
@@ -151,8 +219,51 @@ table {
     box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
 }
 
-td.centered, th.centered {
-	text-align: center;
+table {
+	font: 10pt Georgia, Baskerville, Serif;
 }
-
-
+table li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+table thead li {
+	font-weight: bold;
+	cursor: default;
+}
+table ul {
+	margin: 0;
+	padding: 0;
+}
+table li:last-child {
+	border: none;
+}
+table li {
+	display: block;
+	float: left;
+	border-right: 1px solid #ccc;
+	padding: 6px 4px;
+	margin: -4px 0 -4px 0;
+	height: 18px;
+}
+table form {
+	margin: 0;
+	padding: 0;
+}
+table li input {
+	width: 100%;
+}
+table li select {
+	width: 75%;
+}
+/* colum widths */
+table li.needed, li.available, table li.ordered, table li.inventory, table li.sold { width: 70px; text-align: center;  }
+table li.qty { width: 30px; text-align: center; }
+table li.partNo { width: 200px; text-align: left; }
+table li.footprint { width: 100px; text-align: left; }
+table li.value, table li.voltage, table li.tolerance { width: 90px; text-align: center; }
+table li.types_id, table li.subtypes_id { width: 100px; text-align: center; }
+table li.action { width: 80px;	text-align: center; }
+table li.name { width: 150px; text-align: left; }
+table li.bom-select { width: 824px; text-align: center; }
+table li.bom-select select { width: 400px; }
