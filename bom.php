@@ -59,6 +59,7 @@ $partSelector .= "</select>";
 
 
 <!-- Display a select list of all the products. Display the BOM for the selected product. -->
+<!-- I realize this is ugly, customized stuff; needs to be included in table.php -->
 <div id="main">
 	<ul> <?php 
 	foreach ( $prodList as $pr_id => $prod ) { ?>
