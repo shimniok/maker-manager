@@ -17,9 +17,8 @@ $partcount = new Data($db, 'partcount', 'id', array('id', 'total', 'available'))
 $type = new Data($db, 'types', 'id', array('name', 'id' ));
 $subtype = new Data($db, 'subtypes', 'id', array('name', 'id'));
 $prod = new Data($db, 'products', 'id', array('name', 'id', 'inventory', 'needed', 'sold'));
-$bom = new Data($db, 'product_part', 'id', array('products_id', 'id', 'parts_id', 'qty', 'needed'));
-$build = new Data($db, 'builds', 'id', array('products_id', 'id', 'qty'));
-
-// TODO: write code to display junction table
+$bom = new Data($db, 'product_part', 'id', array('products_id', 'id', 'parts_id', 'qty'));
+$buildhist = new Data($db, 'build_history', 'id', array('products_id', 'id', 'qty'));
+//$build = new Data($db, 'builds', 'id', array('products_id', 'id', 'qty'));
 
 ?>
