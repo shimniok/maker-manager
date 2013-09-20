@@ -3,8 +3,10 @@
  * action script for ajax submit of Products
  */
 include_once 'common/base.php';
+//include_once 'inc/data.inc.php';
 
 $prod = new Data($db, 'products', 'id', array('id', 'name', 'inventory', 'needed', 'sold'));
+$buildhist = new Data($db, 'build_history', 'id', array('products_id', 'id', 'qty', 'bucket'));
 
 // input validation?
 $id = '';
@@ -31,10 +33,10 @@ switch($_POST['mode']) {
 		$prod->update($id, $data);
 		break;
 	case 'built' :
-		$row = $prod->loadRow('id', $id);
-		$data['inventory'] = $row['inventory'] + 1;
-		$data['needed'] = $row['needed'] - 1;
-		$prod->update($id, $data);
+		$buildhist->call("build_one", array( $id ));
+		//$row = $prod->loadRow('id', $id);
+		$data['inventory']++;
+		$data['needed']--;
 		break;
 	case 'sold' :
 		$row = $prod->loadRow('id', $id);

@@ -179,7 +179,7 @@ class Data
 		try {
 			// DELETE SQL statement
 			$this->_delete = "DELETE FROM ".$this->_table." WHERE ".$this->_pkey."=:".$this->_pkey;
-		
+
  			error_log("update=".$this->_delete." id=".$id."\n",3,"inv.log");
  		
             $stmt = $this->_db->prepare($this->_delete);
@@ -198,7 +198,7 @@ class Data
     /**
      * Loads all parts
      *
-     * @return Part No, Footprint, Value, Voltage, Tolerance, Type, Subtype
+     * @return all columns, all rows
      */
     public function load()
     {
@@ -227,6 +227,13 @@ class Data
     }
     
     
+	/**
+     * Loads the first matching row
+     *
+     * @param $col is the column name for where clause
+     * @param $val is the value for where clause
+     * @return an array of database rows as arrays
+     */    
     public function loadRow($col, $val)
     {
 		// IMPROVE INPUT VALIDATION HERE
@@ -250,7 +257,7 @@ class Data
     
     
 	/**
-     * Loads all parts
+     * Loads all matching rows
      *
      * @param $col is the column name for where clause
      * @param $val is the value for where clause
@@ -283,7 +290,28 @@ class Data
         return $entries;
     }
     
-    
+    public function call($fctn, $params)
+    {
+
+		$query = "CALL ".$fctn." (";
+		$i = 0;
+		foreach ($params as $p) {
+			$query .= ":p".$i;
+		}
+		$query .= ")";
+
+      	error_log("call: $query\n",3,"inv.log");
+
+		$stmt = $this->_db->prepare($query);
+		
+		$i = 0;
+		foreach ($params as $p) {
+			$stmt->bindParam(":p".$i, $p);
+		}
+		
+		$stmt->execute();
+	}
+       
     // REVISE THIS
     public function lookup($id)
     {
