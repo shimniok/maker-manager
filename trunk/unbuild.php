@@ -24,6 +24,7 @@ $metadata = array(
 );
 
 echo "<div id=\"main\">";
+echo "<span style='color: red; font-weight:bold;'>NOTE: this is an experimental page. Don't click anything.</span>";
 renderTable2($metadata, $data);
 echo "</div>";
 
