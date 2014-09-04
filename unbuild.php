@@ -23,9 +23,19 @@ $metadata = array(
 	'qty' => array( 'title' => 'Qty', 'edit' => false )
 );
 
+?>
+<body>
+    <script src="js/jquery.inline.edit.js" type="text/javascript"></script>
+    <div id="page-wrap">
+        <div id="header">
+            <h1><a href="/mmrp">MakerMRP</a></h1>
+            <h2><?php echo $pageTitle ?></h2>
+        </div>
+<?php
+
 echo "<div id=\"main\">";
 echo "<span style='color: red; font-weight:bold;'>NOTE: this is an experimental page. Don't click anything.</span>";
-renderTable2($metadata, $data);
+renderTable2($metadata, $data, false, 25);
 echo "</div>";
 
 include_once "common/menu.php";

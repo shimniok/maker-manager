@@ -2,13 +2,14 @@
 $(document).ready(function() {
 
 	/**
-	 * Restore normal display
+	 * Restore normal table display (non-edit mode)
 	 */
 	function normal() {
 		$("span.text").show();
 		$("span.button").show();
 		$("span.edit").hide();
-		$("td").bind('click', edit);
+		$("table tr").bind('click', edit);
+		// make sure last row is editable for adding new stuff
 	}
 
 	/**
@@ -204,6 +205,145 @@ $(document).ready(function() {
 	});
 
 	/**
+	 * BOM add, show part selector popup box
+	 * 
+	 * @param id is the ID of the prod (BOM) to which we're adding a part
+	 */
+	function showPopupBox(id) {    // To Load the Popupbox
+		$('#popup_box table').attr('id', id); // save prod id for later
+		$('#popup_box').fadeIn("slow");
+		$("#container").css({ // this is just for style
+			"opacity": "0.3"  
+		});         
+	}     
+	
+	/**
+	 * BOM add, hide part selector popup box
+	 */
+	function hidePopupBox() {
+		$('#popup_box').fadeOut("fast");
+	}
+
+	/**
+	 * BOM add, loads popup box for parts selection
+	 */
+	$('form.bom-add').click(function() {
+		var id = $(this).closest('table').attr('id'); // find prod id for BOM
+		showPopupBox(id);
+		return false;
+	});
+	
+	/**
+	 * Add button clicked, now we add the selected part
+	 */
+	$('#popup_box form input.add').click(function() {		
+		var partId = $(this).closest('form').attr('id');
+		var prodId = $(this).closest('table').attr('id');
+		var mydata = "&mode=add&qty=1&parts_id="+partId+"&products_id="+prodId;
+		myhandler = addHandler;
+		console.log(mydata);
+		$.ajax({
+			dataType: "json",
+			type: "POST",
+			url: actionUrl,
+			data: mydata, // serializes the form's elements.
+			success: myhandler
+		});
+		return false;
+	});
+
+	/**
+	 * Close button clicked, to cancel / hide the popup
+	 */
+	$("#popupBoxClose").click(function() {
+		hidePopupBox();
+		return false;
+	});
+
+	/**
+	 * Select a parts row to add to BOM
+	 */
+	/*
+	$("#popup_box tr").click(function() {
+		$(this).addClass('selected').siblings().removeClass('selected');
+		return false;
+	});
+	*/
+
+	/**
+	 * Table search/filter
+	 */
+	 
+	// NEW selector
+	jQuery.expr[':'].search = function(a, i, m) {
+	  return jQuery(a).text().toUpperCase()
+		  .indexOf(m[3].toUpperCase()) >= 0;
+	};
+ 
+ 	/**
+ 	 * Initialize all the trs with "found" so they are available for pagination
+ 	 */
+ 	$("table.filtered tbody tr").addClass("found");
+
+	/**
+	 * Live search for trs with span.text containing variable in #searchInput
+	 */ 
+	$("#searchInput").keyup(function() {
+		var data = this.value.split(" ");
+		var table = $("table.filtered");
+		if (data == '') {
+			table.find("tbody tr").addClass("found");
+		} else {
+			table.find("tbody tr").removeClass("found");
+			table.find("tr:last").show();
+			$.each(data, function(i, v) {
+				var text = table.find("tr span.text:search('"+v+"')").closest("tr").addClass("found");
+			});
+		}
+		table.trigger('repaginate');
+	});	 
+
+	/**
+	 * Capture submit for search/filter form
+	 */
+	// TODO
+
+	/**
+	 * Table pagination
+	 * 
+	 * Must set numPerPage externally
+	 */
+
+	$('table.paginated').each(function() {
+		var currentPage = 0;
+		var $table = $(this);
+		$table.bind('repaginate', function() {
+			$table.find('tbody tr').hide();
+			$("div.pager").remove(); // remove the old pager
+			var $pager = $('<div class="pager"></div>');
+			var numRows = $table.find('tbody tr.found').length;
+			var numPages = Math.ceil(numRows / numPerPage);
+			// if search filters out everything...
+			if (numPages == 0) numPages = 1; 
+			// Move this into the repaginate bind function
+			$("div.pager span").remove();
+			for (var page = 0; page < numPages; page++) {
+				$('<span class="page-number"></span>').text(page + 1).bind('click', {
+					newPage: page
+				}, function(event) {
+					currentPage = event.data['newPage'];
+					$table.trigger('repaginate');
+					$(this).addClass('active').siblings().removeClass('active');
+				}).appendTo($pager).addClass('clickable');
+			}
+			$pager.insertBefore($table).find('span.page-number:first').addClass('active');
+			$table.find('tbody tr.found').slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+			$table.find('tr:last').show();
+		});
+		$table.trigger('repaginate');
+	});
+
+	/**
 	 * Form update submit handler
 	 */
 	$("tbody tr td form").submit(function () {
@@ -223,5 +363,4 @@ $(document).ready(function() {
 	 * Display normally, show/hide as appropriate
 	 */	
 	normal();
-	
 });

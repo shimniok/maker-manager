@@ -13,6 +13,7 @@ include_once 'inc/data.inc.php';
 $prodList = $prod->load();
 $bomList = $bom->load();
 $partList = $part->load();
+$countList = $partcount->load();
 $typeList = $type->load();
 $subTypeList = $subtype->load();
 
@@ -21,10 +22,12 @@ $data = array(
 	'bom' => $bomList,
 	'parts' => $partList,
 	'types' => $typeList,
-	'subtypes' => $subTypeList
+	'subtypes' => $subTypeList,
+	'counts' => $countList	
 );
 
 $metadata = array(
+	'available' => array( 'title' => 'Available', 'edit' => false, 'table' => 'counts', 'key' => 'id', 'col' => 'available', 'negative' => true, 'low' => 10 ),
 	'partNo' => array( 'title' => 'Part No.', 'edit' => true ), 
 	'footprint' => array( 'title' => 'Footprint', 'edit' => true ),  
 	'value' => array( 'title' => 'Value', 'edit' => true ),  
@@ -35,6 +38,7 @@ $metadata = array(
 );
 
 // Generate a the part selector pulldown thingy ahead of time
+/*
 $partSelector = "<select name='parts_id'>";
 foreach ($partList as $id => $part) {
 	$partSelector .= "<option id='".$id."' value='".$id."'>";
@@ -54,23 +58,56 @@ foreach ($partList as $id => $part) {
 	$partSelector .= "</option>";
 }
 $partSelector .= "</select>";
-
+*/
 ?>
 
 
 <!-- Display a select list of all the products. Display the BOM for the selected product. -->
 <!-- I realize this is ugly, customized stuff; needs to be included in table.php -->
+<body>
+    <script src="js/jquery.inline.edit.js" type="text/javascript"></script>
+    <div id="page-wrap">
+        <div id="header">
+            <h1><a href="/mmrp">MakerMRP</a></h1>
+            <h2><?php echo $pageTitle ?></h2>
+        </div>
+
+<!-- Part selector popup box -->
+<div id="popup_box" class='bordered'><?php
+	$pdata = array(
+		'main' => $partList, // main table
+		'types' => $typeList, 
+		'subtypes' => $subTypeList,
+		'counts' => $countList
+	);
+
+	$pmeta = array(
+		'partNo' => array( 'title' => 'Part No.', 'edit' => true ), 
+		'footprint' => array( 'title' => 'Footprint', 'edit' => true ),  
+		'value' => array( 'title' => 'Value', 'edit' => true ),  
+		'voltage' => array( 'title' => 'Voltage', 'edit' => true ),  
+		'tolerance' => array( 'title' => 'Tolerance', 'edit' => true ),
+		'types_id' => array( 'title' => 'Type', 'edit' => true, 'table' => 'types', 'key' => 'types_id', 'col' => 'name' ),
+		'subtypes_id' => array( 'title' => 'Subtype', 'edit' => true, 'table' => 'subtypes', 'key' => 'subtypes_id', 'col' => 'name' )
+		//'action' => array( 'title' => 'Action', 'button' => 'select')
+	);?>
+    <h1>Part Selector</h1><?php
+	renderTable($pmeta, $pdata, false, 12, 'add'); ?>
+    <a id="popupBoxClose">Close</a>
+</div>
+
 <div id="main">
 	<ul> <?php 
 	foreach ( $prodList as $pr_id => $prod ) { ?>
 	<li class="bom" id="<?php echo $pr_id ?>"><?php echo $prod['name']; ?>
-		<table class='bordered'>
+		<table class='editable bordered' id='<?php echo $pr_id; ?>'>
 		<thead>
 			<tr><th><ul> 
 			<li class='qty'>Qty</li><?php
 			foreach ( $metadata as $col => $meta ) {
 				echo "<li class='".$col."'>".$meta['title']."</li>";			
 			} ?>
+			<li class='action'>Action</li>			
 			</ul></th></tr>
 		</thead>
 		<tbody>
@@ -82,7 +119,7 @@ $partSelector .= "</select>";
 					// list part details
 					$pid = $bom['parts_id'];
 					$part = $data['parts'][$pid];?>
-					<tr><td><form><ul>
+					<tr><td><form id='<?php echo $row["id"];?>'><ul>
 						<li class='qty'>
 						<span class='text'><?php echo $bom['qty']; ?></span>
 						<span class='edit'>
@@ -101,9 +138,21 @@ $partSelector .= "</select>";
 						} else {
 							$myval = $part[$col];
 						}
-						echo "<li class='".$col."' value='".$pid."'>".$myval."</li>";
-					}?>
-					<li class='action'>
+						echo "<li class='".$col."' value='".$pid."'>";
+
+						// Higlights low inventory numbers
+						if ($myval < 0 && isset($meta['negative'])) { ?>
+							<span class='alert'>
+<?php					} elseif (isset($meta['low']) && $myval <= $meta['low']) { ?>
+							<span class='warning'>
+<?php					} else { ?>
+							<span class='nothing'>
+<?php					}
+						echo $myval;
+?>						</span>
+						</li>
+<?php				}
+?>					<li class='action'>
 						<span class='button'>
 							<input type='button' value='delete' class='delete'/>
 							<input type='hidden' value='<?php echo $bom_id; ?>' name='id' />
@@ -124,12 +173,14 @@ $partSelector .= "</select>";
 					<input type='text' class='qty' name='qty' value='1'/>
 					<input type='hidden' name='products_id' value='<?php echo $prod['id']; ?>'/>
 				</li>
-				<li class='bom-select'><?php echo $partSelector; ?></li>
-				<li class='action'><input type='submit' value='bom-add' class='bom-add'/></li>
+				<!--<li class='bom-select'><?php echo $partSelector; ?></li>-->
+				<li class='action'><input id='<?php echo $prod['id']; ?>' type='submit' value='bom-add' class='bom-add'/></li>
 			</ul></form></td></tr>
 		</tbody>
 		</table>
-	</li> <?php	
+		<a href="#">top</a>
+		</li>
+		<?php	
 	} ?>
 	</ul>
 </div>

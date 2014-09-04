@@ -24,8 +24,8 @@ $data = array(
 );
 
 $metadata = array(
-	'needed' => array( 'width' => '300', 'title' => 'Needed', 'edit' => false, 'table' => 'counts', 'key' => 'id', 'col' => 'total' ), 
-	'available' => array( 'title' => 'Available', 'edit' => false, 'table' => 'counts', 'key' => 'id', 'col' => 'available' ), 
+	'needed' => array( 'width' => '300', 'title' => 'Needed', 'edit' => false, 'table' => 'counts', 'key' => 'id', 'col' => 'total'), 
+	'available' => array( 'title' => 'Available', 'edit' => false, 'table' => 'counts', 'key' => 'id', 'col' => 'available', 'negative' => true, 'low' => 10 ), 
 	'ordered' => array( 'title' => 'Ordered', 'edit' => true, 'button' => 'ordered' ),
 	'inventory' => array( 'title' => 'Inventory', 'edit' => true, 'button' => 'received' ), 
 	'partNo' => array( 'title' => 'Part No.', 'edit' => true ), 
@@ -36,9 +36,17 @@ $metadata = array(
 	'types_id' => array( 'title' => 'Type', 'edit' => true, 'table' => 'types', 'key' => 'types_id', 'col' => 'name' ),
 	'subtypes_id' => array( 'title' => 'Subtype', 'edit' => true, 'table' => 'subtypes', 'key' => 'subtypes_id', 'col' => 'name' )
 );
-
+?>
+<body>
+    <script src="js/jquery.inline.edit.js" type="text/javascript"></script>
+    <div id="page-wrap">
+        <div id="header">
+            <h1><a href="/mmrp">MakerMRP</a></h1>
+            <h2><?php echo $pageTitle ?></h2>
+        </div>
+<?php
 echo "<div id=\"main\">";
-renderTable2($metadata, $data);
+renderTable($metadata, $data, true, 25);
 echo "</div>";
 
 include_once "common/menu.php";
