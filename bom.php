@@ -28,6 +28,8 @@ $data = array(
 
 $metadata = array(
 	'available' => array( 'title' => 'Available', 'edit' => false, 'table' => 'counts', 'key' => 'id', 'col' => 'available', 'negative' => true, 'low' => 10 ),
+	'ordered' => array( 'title' => 'Ordered', 'edit' => false, 'table' => 'parts', 'key' => 'id', 'col' => 'ordered' ),
+	'inventory' => array( 'title' => 'Inventory', 'edit' => false, 'table' => 'parts', 'key' => 'id', 'col' => 'inventory' ),
 	'partNo' => array( 'title' => 'Part No.', 'edit' => true ), 
 	'footprint' => array( 'title' => 'Footprint', 'edit' => true ),  
 	'value' => array( 'title' => 'Value', 'edit' => true ),  
@@ -85,7 +87,8 @@ $metadata = array(
 
 	<ul><?php 
 	foreach ( $prodList as $pr_id => $prod ) { ?>
-	<li class="bom" id="<?php echo $pr_id ?>"><span><?php echo $prod['name']; ?>
+	<li class="bom" id="<?php echo $pr_id ?>"><span>
+		<?php echo $prod['name']." - Needed:".$prod['needed']; ?></span>
 		<table class='editable bordered' id='<?php echo $pr_id; ?>'>
 		<thead>
 			<tr><th><ul> 
