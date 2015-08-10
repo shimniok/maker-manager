@@ -309,7 +309,6 @@ class Data
     
     public function call($fctn, $params)
     {
-
 		$query = "CALL ".$fctn." (";
 		$i = 0;
 		foreach ($params as $p) {
@@ -320,13 +319,15 @@ class Data
 		$stmt = $this->_db->prepare($query);
 		
 		$i = 0;
+		$msg = "call: $query - "; // error message
 		foreach ($params as $p) {
 			$stmt->bindParam(":p".$i, $p);
+			$msg .= "$p ";
 		}
 
 		try {
 			$stmt->execute();
-			$this->writeLog("call: $query\n");
+			$this->writeLog($msg);
 		} catch(Exception $e) {
 			$this->_message = $e->getMessage();
             $this->writeLog($e->getMessage());
