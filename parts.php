@@ -46,7 +46,7 @@ $metadata = array(
         </div>
 <?php
 echo "<div id=\"main\">";
-renderTable($metadata, $data, true, 25);
+renderTable($metadata, $data, true, 20);
 echo "</div>";
 
 include_once "common/menu.php";
