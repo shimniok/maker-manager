@@ -284,8 +284,13 @@ class Data
  		try {
         	$stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
             $stmt->bindParam(":val", $val, PDO::PARAM_STR);
-            $stmt->execute();
-			$row = $stmt->fetch(PDO::FETCH_ASSOC);	// do this once
+            if ($stmt->execute()) {
+				$row = $stmt->fetch(PDO::FETCH_ASSOC);	// do this once
+			} else {
+				$err = $stmt->errorInfo();
+				$msg = "load(): ".$err[0]." ".$err[1]." ".$err[2];			
+				$this->writeLog($msg);
+			}            
             $stmt->closeCursor();
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
