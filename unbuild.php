@@ -35,7 +35,7 @@ $metadata = array(
 
 echo "<div id=\"main\">";
 echo "<span style='color: red; font-weight:bold;'>NOTE: this is an experimental page. Don't click anything.</span>";
-renderTable2($metadata, $data, false, 25);
+renderTable($metadata, $data, false, 20);
 echo "</div>";
 
 include_once "common/menu.php";
