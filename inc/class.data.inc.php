@@ -288,7 +288,7 @@ class Data
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);	// do this once
 			} else {
 				$err = $stmt->errorInfo();
-				$msg = "load(): ".$err[0]." ".$err[1]." ".$err[2];			
+				$msg = "loadRow(): ".$err[0]." ".$err[1]." ".$err[2];			
 				$this->writeLog($msg);
 			}            
             $stmt->closeCursor();
@@ -319,14 +319,19 @@ class Data
  		try {
         	$stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
             $stmt->bindValue(":val", $val, PDO::PARAM_STR);
-            $stmt->execute();
-			while($row = $stmt->fetch()) {
-				$arr = array();
-				foreach ($this->_columns as $c) {
-					$arr[$c] = $row[$c];
-				}
-				$entries[ $row[$this->_pkey] ] = $arr;
-			}  
+            if ($stmt->execute()) {
+				while($row = $stmt->fetch()) {
+					$arr = array();
+					foreach ($this->_columns as $c) {
+						$arr[$c] = $row[$c];
+					}
+					$entries[ $row[$this->_pkey] ] = $arr;
+				}  
+			} else {
+				$err = $stmt->errorInfo();
+				$msg = "loadList(): ".$err[0]." ".$err[1]." ".$err[2];			
+				$this->writeLog($msg);
+			}      
             $stmt->closeCursor();
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
