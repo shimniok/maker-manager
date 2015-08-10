@@ -328,7 +328,7 @@ class Data
 		try {
 			$stmt->execute();
 			$this->writeLog($msg);
-		} catch(Exception $e) {
+		} catch(PDOException $e) {
 			$this->_message = $e->getMessage();
             $this->writeLog($e->getMessage());
         }
