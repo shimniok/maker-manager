@@ -31,7 +31,7 @@ $metadata = array( 'name' => array('title' => 'Name', 'edit' => true),
 <?php
 
 echo "<div id=\"main\">";
-renderTable2($metadata, $data, true, 25);
+renderTable($metadata, $data, true, 20);
 echo "</div>";
 
 include_once "common/menu.php";
