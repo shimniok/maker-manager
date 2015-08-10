@@ -23,7 +23,7 @@ $metadata = array( 'name' => array('title' => 'Name', 'edit' => true) );
 <?php
 
 echo "<div id=\"main\">";
-renderTable2($metadata, $data, true, 25); // render the whole page
+renderTable($metadata, $data, true, 20); // render the whole page
 echo "</div>";
 
 include_once "common/menu.php";
