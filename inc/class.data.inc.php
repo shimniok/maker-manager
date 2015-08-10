@@ -171,13 +171,13 @@ class Data
 				$msg .= " :$col=$value";
 			}
             if ($stmt->execute()) {
-				$this->writeLog($msg);
 				$status = 0;
 			} else {
 				$err = $stmt->errorInfo();
-				$this->writeLog($msg." ".$err[0]." ".$err[1]." ".$err[2]);            
+				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];
 				$status = 1;
 			}
+			$this->writeLog($msg);
 			$stmt->closeCursor(); 
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
@@ -192,27 +192,34 @@ class Data
 	public function del($id)
 	{
 		// IMPROVE INPUT VALIDATION HERE
-		
+		$status = 0;
 		$this->_message = '';
  
 		try {
 			// DELETE SQL statement
 			$this->_delete = "DELETE FROM ".$this->_table." WHERE ".$this->_pkey."=:".$this->_pkey;
 
- 			$this->writeLog("update=".$this->_delete." id=".$id."\n");
- 		
             $stmt = $this->_db->prepare($this->_delete);
 			// BIND A LIST OF PARAMETERS
             $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
-            $stmt->execute();
+
+			$msg = "delete: ".$this->_delete." id=".$id."\n";
+			
+			if ($stmt->execute()) {
+				$status = 0;
+			} else {
+				$err = $stmt->errorInfo();
+				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];			
+				$status = 1;
+			}
             $stmt->closeCursor();
- 
-            return 0;
+			$this->writeLog($msg);
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
             $this->writeLog($e->getMessage());
-            return 1;
+            $status = 1;
         }
+        return $status;
 	}
 	
     /**
