@@ -68,6 +68,16 @@ class Data
 	}
 	
 	/**
+	 * Writes to error log with common format
+	 * 
+	 * @msg - single line message, don't include \n
+	 */
+	public function writeLog($msg)
+	{
+		$date = date("m/d/Y h:i:s A (e) $msg\n", 3, "inv.log");
+	}
+	
+	/**
 	 * returns the last error message, if any
 	 */
 	public function getMessage() 
@@ -113,11 +123,12 @@ class Data
             $id = $this->_db->lastInsertId();
             $stmt->closeCursor();
 
-			error_log("add=".$this->_insert." Data: ".implode(", ", $newData)."\n",3,"inv.log");
+			$this->writeLog("add=".$this->_insert." Data: ".implode(", ", $newData));
             
             return $id;
         } catch(PDOException $e) {
             $this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
             return -1;
         }
 
@@ -148,7 +159,7 @@ class Data
 			implode(', ', $list).
 			" WHERE ".$this->_pkey."=:".$this->_pkey;
  
- 		error_log("update=".$this->_update."\n",3,"inv.log");
+ 		$this->writeLog("update=".$this->_update."\n");
  
 		try {
             $stmt = $this->_db->prepare($this->_update);
@@ -163,6 +174,7 @@ class Data
             return 0;
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
             return 1;
         }
 	}
@@ -180,7 +192,7 @@ class Data
 			// DELETE SQL statement
 			$this->_delete = "DELETE FROM ".$this->_table." WHERE ".$this->_pkey."=:".$this->_pkey;
 
- 			error_log("update=".$this->_delete." id=".$id."\n",3,"inv.log");
+ 			$this->writeLog("update=".$this->_delete." id=".$id."\n");
  		
             $stmt = $this->_db->prepare($this->_delete);
 			// BIND A LIST OF PARAMETERS
@@ -191,6 +203,7 @@ class Data
             return 0;
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
             return 1;
         }
 	}
@@ -221,6 +234,7 @@ class Data
             $stmt->closeCursor();
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
         }
 
         return $entries;
@@ -250,6 +264,7 @@ class Data
             $stmt->closeCursor();
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
         }
 
         return $row;
@@ -285,6 +300,7 @@ class Data
             $stmt->closeCursor();
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
         }
 
         return $entries;
@@ -300,16 +316,20 @@ class Data
 		}
 		$query .= ")";
 
-      	error_log("call: $query\n",3,"inv.log");
-
 		$stmt = $this->_db->prepare($query);
 		
 		$i = 0;
 		foreach ($params as $p) {
 			$stmt->bindParam(":p".$i, $p);
 		}
-		
-		$stmt->execute();
+
+		try {
+			$stmt->execute();
+			$this->writeLog("call: $query\n");
+		} catch(Exception $e) {
+			$this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
+        }
 	}
        
     // REVISE THIS
