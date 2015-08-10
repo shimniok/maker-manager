@@ -37,28 +37,6 @@ $metadata = array(
 	'subtypes_id' => array( 'title' => 'Subtype', 'edit' => true, 'table' => 'subtypes', 'key' => 'subtypes_id', 'col' => 'name' )
 );
 
-// Generate a the part selector pulldown thingy ahead of time
-/*
-$partSelector = "<select name='parts_id'>";
-foreach ($partList as $id => $part) {
-	$partSelector .= "<option id='".$id."' value='".$id."'>";
-	foreach ($metadata as $col => $meta) {
-		// If a table lookup is specified, do the lookup,
-		// otherwise just print out the row value directly
-		if (isset($meta['table'])) {
-			$table = $data[$meta['table']]; // table to be looked up
-			$key = $part[$meta['key']]; // fkey value in main table
-			$fcol = $meta['col']; // foreign column name
-			$partSelector .= $table[$key][$fcol];
-		} else {
-			$partSelector .= $part[$col]." ";
-		}
-		$partSelector .= " ";
-	}
-	$partSelector .= "</option>";
-}
-$partSelector .= "</select>";
-*/
 ?>
 
 
@@ -92,14 +70,22 @@ $partSelector .= "</select>";
 		//'action' => array( 'title' => 'Action', 'button' => 'select')
 	);?>
     <h1>Part Selector</h1><?php
-	renderTable($pmeta, $pdata, false, 12, 'add'); ?>
+	renderTable($pmeta, $pdata, false, 15, 'add'); ?>
     <a id="popupBoxClose">Close</a>
 </div>
 
 <div id="main">
-	<ul> <?php 
+	<form id="bom-select">
+		<select name='bom-select'>
+<?php	foreach ( $prodList as $pr_id => $prod ) { 
+			echo "<option value='".$pr_id."'>".$prod['name']."</option>";
+		}?>
+		</select>
+	</form>
+
+	<ul><?php 
 	foreach ( $prodList as $pr_id => $prod ) { ?>
-	<li class="bom" id="<?php echo $pr_id ?>"><?php echo $prod['name']; ?>
+	<li class="bom" id="<?php echo $pr_id ?>"><span><?php echo $prod['name']; ?>
 		<table class='editable bordered' id='<?php echo $pr_id; ?>'>
 		<thead>
 			<tr><th><ul> 
@@ -179,7 +165,7 @@ $partSelector .= "</select>";
 		</tbody>
 		</table>
 		<a href="#">top</a>
-		</li>
+		</span></li>
 		<?php	
 	} ?>
 	</ul>
