@@ -37,6 +37,7 @@ switch($_POST['mode']) {
 		//$row = $prod->loadRow('id', $id);
 		$data['inventory']++;
 		$data['needed']--;
+		$prod->update($id, $data);
 		break;
 	case 'sold' :
 		$row = $prod->loadRow('id', $id);
