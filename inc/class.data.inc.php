@@ -144,7 +144,7 @@ class Data
 	public function update($id, $data)
 	{
 		// IMPROVE INPUT VALIDATION HERE
-		
+		$status = 0;
 		$this->_message = '';
 		
 		// Construct UPDATE SQL statement
@@ -159,25 +159,31 @@ class Data
 		$this->_update = "UPDATE ".$this->_table." SET ".
 			implode(', ', $list).
 			" WHERE ".$this->_pkey."=:".$this->_pkey;
- 
- 		$this->writeLog("update=".$this->_update."\n");
- 
+
+		$msg = "update: ".$this->_update;
+
 		try {
             $stmt = $this->_db->prepare($this->_update);
 			// BIND A LIST OF PARAMETERS
             $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
             foreach ($newData as $col => $value) {
 				$stmt->bindValue(":$col", $value); // TODO: what to do about param type?
+				$msg .= " :$col=$value";
 			}
-            $stmt->execute();
-            $stmt->closeCursor();
- 
-            return 0;
+            if ($stmt->execute()) {
+				$this->writeLog($msg);
+				$status = 0;
+			} else {
+				$err = $stmt->errorInfo();
+				$this->writeLog($msg." ".$err[0]." ".$err[1]." ".$err[2]);            
+				$status = 1;
+			}
+			$stmt->closeCursor(); 
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
             $this->writeLog($e->getMessage());
-            return 1;
         }
+        return $status;
 	}
 	
 	/**
