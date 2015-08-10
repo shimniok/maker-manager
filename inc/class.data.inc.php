@@ -322,15 +322,14 @@ class Data
 		$msg = "call: $query - "; // error message
 		foreach ($params as $p) {
 			$stmt->bindParam(":p".$i, $p);
-			$msg .= "$p ";
+			$msg .= "[$p] ";
 		}
 
-		try {
-			$stmt->execute();
+		if ($stmt->execute()) {
 			$this->writeLog($msg);
-		} catch(PDOException $e) {
-			$this->_message = $e->getMessage();
-            $this->writeLog($e->getMessage());
+		} else {
+			$err = $stmt->errorInfo();
+            $this->writeLog($msg." ".$err[0]." ".$err[1]." ".$err[2]);
         }
 	}
        
