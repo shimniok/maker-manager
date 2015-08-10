@@ -94,6 +94,7 @@ class Data
 		// IMPROVE INPUT VALIDATION HERE
 		
 		$this->_message = '';
+		$status = -1;
  
         try {
 			// Construct UPDATE SQL statement
@@ -114,25 +115,30 @@ class Data
 			implode(', ', $values).')';
 
             $stmt = $this->_db->prepare($this->_insert);
+
+			$msg = "add(): ".$this->_insert;
             
 			// BIND A LIST OF PARAMETERS
             foreach ($newData as $col => $value) {
 	            $stmt->bindValue(":$col", $value); // TODO: what to do about param type? PDO::PARAM_STR
+	            $msg .= " :$col=$value";
 			}
-
-            $stmt->execute();
-            $id = $this->_db->lastInsertId();
+			
+			if ($stmt->execute()) {
+				$status = $this->_db->lastInsertId();
+			} else {
+				$err = $stmt->errorInfo();
+				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];
+				$status = -1;
+			}
+			$this->writeLog($msg);            
             $stmt->closeCursor();
-
-			$this->writeLog("add=".$this->_insert." Data: ".implode(", ", $newData));
-            
-            return $id;
         } catch(PDOException $e) {
             $this->_message = $e->getMessage();
             $this->writeLog($e->getMessage());
-            return -1;
+            $status = -1;
         }
-
+		return $status;
 	}
 
 	/**
@@ -144,8 +150,8 @@ class Data
 	public function update($id, $data)
 	{
 		// IMPROVE INPUT VALIDATION HERE
-		$status = 0;
 		$this->_message = '';
+		$status = 0;
 		
 		// Construct UPDATE SQL statement
 		$newData = array();	// make a new array of valid columns and values
@@ -160,7 +166,7 @@ class Data
 			implode(', ', $list).
 			" WHERE ".$this->_pkey."=:".$this->_pkey;
 
-		$msg = "update: ".$this->_update;
+		$msg = "update(): ".$this->_update;
 
 		try {
             $stmt = $this->_db->prepare($this->_update);
@@ -192,8 +198,8 @@ class Data
 	public function del($id)
 	{
 		// IMPROVE INPUT VALIDATION HERE
-		$status = 0;
 		$this->_message = '';
+		$status = 0;
  
 		try {
 			// DELETE SQL statement
@@ -203,21 +209,21 @@ class Data
 			// BIND A LIST OF PARAMETERS
             $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
 
-			$msg = "delete: ".$this->_delete." id=".$id."\n";
+			$msg = "del(): ".$this->_delete." id=".$id."\n";
 			
 			if ($stmt->execute()) {
 				$status = 0;
 			} else {
 				$err = $stmt->errorInfo();
 				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];			
-				$status = 1;
+				$status = -1;
 			}
             $stmt->closeCursor();
 			$this->writeLog($msg);
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
             $this->writeLog($e->getMessage());
-            $status = 1;
+            $status = -1;
         }
         return $status;
 	}
