@@ -218,8 +218,8 @@ class Data
 				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];			
 				$status = -1;
 			}
-            $stmt->closeCursor();
 			$this->writeLog($msg);
+            $stmt->closeCursor();
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
             $this->writeLog($e->getMessage());
@@ -243,14 +243,19 @@ class Data
  
  		try {
         	$stmt = $this->_db->prepare($this->_select);
-            $stmt->execute();
-			while($row = $stmt->fetch()) {
-				$arr = array();
-				foreach ($this->_columns as $col) {
-					$arr[$col] = $row[$col];
+            if ($stmt->execute()) {
+				while($row = $stmt->fetch()) {
+					$arr = array();
+					foreach ($this->_columns as $col) {
+						$arr[$col] = $row[$col];
+					}
+					$entries[ $row[$this->_pkey] ] = $arr;
 				}
-				$entries[ $row[$this->_pkey] ] = $arr;
-			}  
+			} else {
+				$err = $stmt->errorInfo();
+				$msg = "load(): ".$err[0]." ".$err[1]." ".$err[2];			
+				$this->writeLog($msg);
+			}
             $stmt->closeCursor();
         } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
