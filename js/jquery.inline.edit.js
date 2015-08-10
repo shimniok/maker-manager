@@ -205,6 +205,15 @@ $(document).ready(function() {
 	});
 
 	/**
+	 * BOM select
+	 */
+	$("form#bom-select select").change(function() {
+		$("li.bom span").hide();
+		var id = $("form#bom-select option:selected").attr('value');
+		$("li#"+id+".bom span").show().find("span.edit").hide(); // have to hide edit stuff too :(
+	});
+
+	/**
 	 * BOM add, show part selector popup box
 	 * 
 	 * @param id is the ID of the prod (BOM) to which we're adding a part
@@ -252,6 +261,9 @@ $(document).ready(function() {
 		return false;
 	});
 
+	/** Make sure popup box height is correct */
+	$("#popup_box").css("height", "auto");
+
 	/**
 	 * Close button clicked, to cancel / hide the popup
 	 */
@@ -259,16 +271,6 @@ $(document).ready(function() {
 		hidePopupBox();
 		return false;
 	});
-
-	/**
-	 * Select a parts row to add to BOM
-	 */
-	/*
-	$("#popup_box tr").click(function() {
-		$(this).addClass('selected').siblings().removeClass('selected');
-		return false;
-	});
-	*/
 
 	/**
 	 * Table search/filter
@@ -300,7 +302,7 @@ $(document).ready(function() {
 				var text = table.find("tr span.text:search('"+v+"')").closest("tr").addClass("found");
 			});
 		}
-		table.trigger('repaginate');
+		table.trigger('reformat');
 	});	 
 
 	/**
@@ -313,19 +315,18 @@ $(document).ready(function() {
 	 * 
 	 * Must set numPerPage externally
 	 */
-
 	$('table.paginated').each(function() {
 		var currentPage = 0;
 		var $table = $(this);
-		$table.bind('repaginate', function() {
-			$table.find('tbody tr').hide();
+		// Reformat after load or after search filters stuff
+		$table.bind('reformat', function() {
 			$("div.pager").remove(); // remove the old pager
 			var $pager = $('<div class="pager"></div>');
 			var numRows = $table.find('tbody tr.found').length;
 			var numPages = Math.ceil(numRows / numPerPage);
-			// if search filters out everything...
+			// If search filters out everything...
 			if (numPages == 0) numPages = 1; 
-			// Move this into the repaginate bind function
+			// Recreate the pager buttons
 			$("div.pager span").remove();
 			for (var page = 0; page < numPages; page++) {
 				$('<span class="page-number"></span>').text(page + 1).bind('click', {
@@ -336,11 +337,18 @@ $(document).ready(function() {
 					$(this).addClass('active').siblings().removeClass('active');
 				}).appendTo($pager).addClass('clickable');
 			}
+			// Put the new pager buttons in place and make the first page/button active
 			$pager.insertBefore($table).find('span.page-number:first').addClass('active');
+			currentPage = 0;
+			$table.trigger('repaginate');
+		});
+		// Repaginate the table so we're showing the selected page		
+		$table.bind('repaginate', function() {
+			$table.find('tbody tr').hide();
 			$table.find('tbody tr.found').slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
 			$table.find('tr:last').show();
 		});
-		$table.trigger('repaginate');
+		$table.trigger('reformat');
 	});
 
 	/**
