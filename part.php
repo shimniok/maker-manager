@@ -5,7 +5,7 @@
 include_once 'common/base.php';
 
 $part = new Data($db, 'parts', 'id',
-				 array('id', 'inventory', 'ordered', 'partNo', 'footprint', 
+				 array('id', 'inventory', 'ordered', 'partNo', 'footprint',
 					   'value', 'voltage', 'tolerance', 'types_id', 'subtypes_id'));
 
 // input validation?
@@ -13,18 +13,16 @@ $id = "";
 if (isset($_POST['id'])) {
 	$id = $_POST['id'];
 }
-$data = array('inventory' => $_POST['inventory'],
-			  'ordered' => $_POST['ordered'],
-			  'partNo' => $_POST['partNo'],
-			  'footprint' => $_POST['footprint'],
-			  'value' => $_POST['value'],
-			  'voltage' => $_POST['voltage'],
-			  'tolerance' => $_POST['tolerance'],
-			  'types_id' => $_POST['types_id'],
-			  'subtypes_id' => $_POST['subtypes_id']
-			 );
 
-switch($_POST['mode']) {
+switch($_GET['mode']) {
+	case 'list' :
+		header('Cache-Control: no-cache, must-revalidate');
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		// headers to tell that result is JSON
+		header('Content-type: application/json');
+
+		echo json_encode($part->load());
+		break;
 	case 'update' :
 		$part->update($id, $data);
 		break;
@@ -42,7 +40,4 @@ switch($_POST['mode']) {
 		break;
 }
 
-// need to echo back JSON version of data
-$data['id'] = $id;
-echo json_encode($data);
 ?>

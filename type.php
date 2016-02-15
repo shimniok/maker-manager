@@ -8,7 +8,10 @@ include_once 'inc/data.inc.php';
 $id = "";
 
 // input validation?
-switch($_POST['mode']) {
+switch($_GET['mode']) {
+	case 'list' :
+		echo json_encode($type->load());
+		break;
 	case 'update' :
 		$id = $_POST['id'];
 		$data = array('name' => $_POST['name'] );
@@ -23,8 +26,4 @@ switch($_POST['mode']) {
 		$type->del($_POST['id']);
 		break;
 }
-
-// need to echo back JSON version of data
-$data['id'] = $id;
-echo json_encode($data);
 ?>
