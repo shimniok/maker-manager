@@ -13,7 +13,7 @@
  */
 class Data
 {
-	 /**
+	/**
 	 * The database object
 	 *
 	 * @var object
@@ -92,7 +92,7 @@ class Data
 		$this->_message = '';
 		$status = -1;
 
-        try {
+    try {
 			// Construct UPDATE SQL statement
 			$newData = array();	// make a new array of valid columns and values
 			$cols = array(); 	// list of columns for INSERT
@@ -106,18 +106,18 @@ class Data
 				}
 			}
 
-            $this->_insert = "INSERT INTO ".$this->_table." (".
+      $this->_insert = "INSERT INTO ".$this->_table." (".
 			implode(', ', $cols).') VALUES ('.
 			implode(', ', $values).')';
 
-            $stmt = $this->_db->prepare($this->_insert);
+      $stmt = $this->_db->prepare($this->_insert);
 
 			$msg = "add(): ".$this->_insert;
 
 			// BIND A LIST OF PARAMETERS
-            foreach ($newData as $col => $value) {
-	            $stmt->bindValue(":$col", $value); // TODO: what to do about param type? PDO::PARAM_STR
-	            $msg .= " :$col=$value";
+    	foreach ($newData as $col => $value) {
+	      $stmt->bindValue(":$col", $value); // TODO: what to do about param type? PDO::PARAM_STR
+	      $msg .= " :$col=$value";
 			}
 
 			if ($stmt->execute()) {
@@ -128,12 +128,12 @@ class Data
 				$status = -1;
 			}
 			$this->writeLog($msg);
-            $stmt->closeCursor();
-        } catch(PDOException $e) {
-            $this->_message = $e->getMessage();
-            $this->writeLog($e->getMessage());
-            $status = -1;
-        }
+        $stmt->closeCursor();
+    } catch(PDOException $e) {
+      $this->_message = $e->getMessage();
+      $this->writeLog($e->getMessage());
+      $status = -1;
+    }
 		return $status;
 	}
 
@@ -201,9 +201,9 @@ class Data
 			// DELETE SQL statement
 			$this->_delete = "DELETE FROM ".$this->_table." WHERE ".$this->_pkey."=:".$this->_pkey;
 
-            $stmt = $this->_db->prepare($this->_delete);
+      $stmt = $this->_db->prepare($this->_delete);
 			// BIND A LIST OF PARAMETERS
-            $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
+      $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
 
 			$msg = "del(): ".$this->_delete." id=".$id."\n";
 
@@ -215,13 +215,13 @@ class Data
 				$status = -1;
 			}
 			$this->writeLog($msg);
-            $stmt->closeCursor();
-        } catch(PDOException $e) {
+      $stmt->closeCursor();
+    } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
-            $this->writeLog($e->getMessage());
-            $status = -1;
-        }
-        return $status;
+    	$this->writeLog($e->getMessage());
+      $status = -1;
+    }
+    return $status;
 	}
 
   /**
@@ -235,12 +235,12 @@ class Data
 
 		$this->_message = '';
 
-		$rows = array();
+		$rows = '';
  		try {
     	$stmt = $this->_db->prepare($this->_select);
       if ($stmt->execute()) {
 				while($row = $stmt->fetch()) {
-					$rows[] = $row;
+					$rows[$row["id"]] = $row;
 				}
 			} else {
 				$err = $stmt->errorInfo();
@@ -257,37 +257,33 @@ class Data
 
 
 	/**
-     * Loads the first matching row
-     *
-     * @param $col is the column name for where clause
-     * @param $val is the value for where clause
-     * @return an array of database rows as arrays
-     */
-    public function loadRow($col, $val)
-    {
+   * Loads the first matching row
+   *
+   * @param $col is the column name for where clause
+   * @param $val is the value for where clause
+   * @return an array of database rows as arrays
+   */
+  public function loadRow($col, $val)
+  {
 		// IMPROVE INPUT VALIDATION HERE
-
 		$this->_message = '';
-
 		$row = array();
-
- 		try {
-        	$stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
-            $stmt->bindParam(":val", $val, PDO::PARAM_STR);
-            if ($stmt->execute()) {
+			try {
+    	$stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
+      $stmt->bindParam(":val", $val, PDO::PARAM_STR);
+      if ($stmt->execute()) {
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);	// do this once
 			} else {
 				$err = $stmt->errorInfo();
 				$msg = "loadRow(): ".$err[0]." ".$err[1]." ".$err[2];
 				$this->writeLog($msg);
 			}
-            $stmt->closeCursor();
-        } catch(PDOException $e) {
+      $stmt->closeCursor();
+    } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
-            $this->writeLog($e->getMessage());
-        }
-
-        return $row;
+      $this->writeLog($e->getMessage());
+    }
+    return $row;
 	}
 
 
