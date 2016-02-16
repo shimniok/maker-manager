@@ -3,29 +3,28 @@
  * action script for ajax submit of Parts
  */
 include_once 'common/base.php';
-include_once 'inc/data.inc.php';
 
 $id = "";
 
-// input validation?
-if (isset($_POST['mode']))
-	switch($_POST['mode']) {
-		case 'update' :
-			$id = $_POST['id'];
-			$data = array('name' => $_POST['name'] );
-			$subtype->update($id, $data);
-			break;
-		case 'add' :
-			$data = array('name' => $_POST['name'] );
-			$id = $subtype->add($data);
-			break;
-		case 'delete' :
-			$id = $_POST['id'];
-			$subtype->del($_POST['id']);
-			break;
-	}
+$subtype = new Data($db, 'subtypes', 'id', array('name', 'id'));
 
-// need to echo back JSON version of data
-$data['id'] = $id;
-echo json_encode($data);
+switch($_GET['mode']) {
+	case 'list' :
+	  echo json_encode($subtype->load());
+		break;
+	case 'update' :
+		$id = $_GET['id'];
+		$data = array('name' => $_GET['name'] );
+		$subtype->update($id, $data);
+		break;
+	case 'add' :
+		$data = array('name' => $_GET['name'] );
+		$id = $subtype->add($data);
+		break;
+	case 'delete' :
+		$id = $_GET['id'];
+		$subtype->del($_GET['id']);
+		break;
+}
+
 ?>
