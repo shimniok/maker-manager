@@ -28,6 +28,7 @@ switch($_GET['mode']) {
 	case 'delete' :
 		$id = $_GET['id'];
 		$subtype->del($_GET['id']);
+		echo json_encode($id);
 		break;
 }
 
