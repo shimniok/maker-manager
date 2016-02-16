@@ -3,7 +3,8 @@
  * action script for ajax submit of Parts
  */
 include_once 'common/base.php';
-include_once 'inc/data.inc.php';
+
+$type = new Data($db, 'types', 'id', array('name', 'id' ));
 
 $id = "";
 
