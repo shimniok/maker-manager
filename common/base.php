@@ -23,7 +23,7 @@ ini_set("display_errors", 1);
 session_start();
 
 // Include site constants
-include_once "inc/constants.inc.php";
+include_once "constants.php";
 
 // Create a database object
 try {
