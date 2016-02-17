@@ -9,23 +9,9 @@
  * PUT BASE_URL/thingy/12    - Updates thingy #12
  * DELETE BASE_URL/thingy/12 - Deletes thingy #12
  */
-include_once 'common/base.php';
+include_once 'base.php';
 
 /** Move all this shit into base.php */
-
-// Get the API name based on the filename
-$me = preg_replace('/\.php$/', '', basename(__FILE__));
-
-// Determine the arguments in the URI
-$argv = preg_split('/\//',
-	preg_replace( '/^.*\/'.$me.'\/{0,1}/', '', $_SERVER['REQUEST_URI']),-1, PREG_SPLIT_NO_EMPTY);
-$argc = count($argv);
-
-function writeLog($msg) {
-	global $me;
-	$date = date("m/d/Y h:i:s A (T)");
-	error_log("$date $me $msg\n", 3, LOG_FILE);
-}
 
 /** End move shit */
 
