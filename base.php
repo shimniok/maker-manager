@@ -2,11 +2,7 @@
 
 /**
  * Sets up the PHP session and database connection provides log function
- * and sets error reporting level, and defines global variables:
- *
- *  $me   - basename of the current php file (used for REST API)
- *  $argv - array of arguments extracted from URI (REST API)
- *  $argc - count of URI arguments
+ * and sets error reporting level.
  *
  * PHP version 5
  *
