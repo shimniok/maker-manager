@@ -39,7 +39,7 @@ app.controller('SubtypeController', function($scope, $http) {
   $scope.new = {id: 0, name: ""};
   $scope.subtypes = [];
 
-  $http.get('api/subtype/list').then(function(resp) {
+  $http.get('api/subtype').then(function(resp) {
     // For JSON responses, resp.data contains the result
     //$scope.subtypes = Object.keys(resp.data).map(function(k) {
     //  return resp.data[k];
@@ -53,7 +53,7 @@ app.controller('SubtypeController', function($scope, $http) {
 
   $scope.add = function(){
     console.log('add(): ', $scope.newName);
-    $http.get('subtype.php?mode=add&name=' + $scope.new.name).then(function(resp) {
+    $http.post('api/subtype', $scope.new ).then(function(resp) {
       console.log('Success', resp.data);
       $scope.subtypes[resp.data['id']] = resp.data;
       $scope.new = {};
@@ -63,7 +63,7 @@ app.controller('SubtypeController', function($scope, $http) {
   $scope.delete = function(id){
     console.log('delete(): ', $scope.subtypes[id], id);
     delete $scope.subtypes[id];
-    $http.get('subtype.php?mode=delete&id=' + id).then(function(resp) {
+    $http.delete('api/subtype/'+id).then(function(resp) {
       console.log('Success', resp.data);
     });
   }
