@@ -71,7 +71,7 @@ class Data
 	public function writeLog($msg)
 	{
 		$date = date("m/d/Y h:i:s A (T)");
-		error_log("$date $msg\n", 3, "inv.log");
+		error_log("$date Data: $msg\n", 3, LOG_FILE);
 	}
 
 	/**
