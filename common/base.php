@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * Sets up the PHP session and database connection
  *
@@ -29,6 +29,5 @@ try {
 	exit;
 }
 
-include_once 'inc/table.php';
 include_once 'inc/class.data.inc.php';
 ?>
