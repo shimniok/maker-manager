@@ -34,14 +34,6 @@ try {
 	exit;
 }
 
-// Get the API name based on the current php filename
-$me = preg_replace('/\.php$/', '', basename(__FILE__));
-
-// Extract any arguments from the URI
-$argv = preg_split('/\//',
-	preg_replace( '/^.*\/'.$me.'\/{0,1}/', '', $_SERVER['REQUEST_URI']),-1, PREG_SPLIT_NO_EMPTY);
-$argc = count($argv);
-
 /**
  * writeLog writes the provided message to the logfile along with date and some other info.
  * Expects a global variables $me and constant LOG_FILE

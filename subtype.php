@@ -11,19 +11,24 @@
  */
 include_once 'base.php';
 
-/** Move all this shit into base.php */
+// Get the API name based on the current php filename
+$me = preg_replace('/\.php$/', '', basename(__FILE__));
 
-/** End move shit */
+// Extract any arguments from the URI
+$argv = preg_split('/\//',
+	preg_replace( '/^.*\/'.$me.'\/{0,1}/', '',
+		$_SERVER['REQUEST_URI']),-1, PREG_SPLIT_NO_EMPTY);
+$argc = count($argv);
 
 if ($argc < 0 || $argc > 1) {
 	writeLog("arg count wrong (argc=$argc) - ".$_SERVER['REQUEST_URI']);
 	exit(2);
 }
 
-header('Content-Type: application/json');
-
 // Prep the data access object
 $subtype = new Data($db, 'subtypes', 'id', array('name', 'id'));
+
+header('Content-Type: application/json');
 
 $response = array();
 
@@ -34,11 +39,11 @@ try {
 			if ($argc == 1) {
 				// Retrieve one
 				$response = $subtype->loadRow('id', $argv[0]);
-				writeLog("GET id=".$argv[0]);
+				writeLog("$me GET id=".$argv[0]);
 			} else {
 				// Retrieve all
 				$response = $subtype->load();
-				writeLog("GET all");
+				writeLog("$me GET all");
 			}
 			break;
 		case 'POST':
@@ -49,10 +54,10 @@ try {
 				$data['id'] = $subtype->add($data);
 				$response = $data;
 				foreach ($params as $key => $value) {
-					writeLog("json decode: params[$key]=($value)");
+					writeLog("$me json decode: params[$key]=($value)");
 				}
 			} else {
-				writeLog("POST couldn't read php://input");
+				writeLog("$me POST couldn't read php://input");
 			}
 			break;
 		case 'DELETE':
@@ -61,9 +66,9 @@ try {
 				$id = $subtype->del($argv[0]);
 				$response = array( 'id' => $id );
 				echo json_encode($id);
-				writeLog("DELETE id=$id");
+				writeLog("$me DELETE id=$id");
 			} else {
-				writeLog("DELETE no id provided");
+				writeLog("$me DELETE no id provided");
 			}
 			break;
 		case 'PUT':
@@ -72,14 +77,14 @@ try {
 				$data = array('name' => $_POST['name']);
 				$id = $subtype->update($id, $data);
 				$response = array( 'id' => $id );
-				writeLog("PUT id=$id data=(".implode(' ', $_POST).")");
+				writeLog("$me PUT id=$id data=(".implode(' ', $_POST).")");
 			} else {
-				writeLog("PUT no data provided");
+				writeLog("$me PUT no data provided");
 			}
 			break;
 	}
 } catch (Exception $e) {
-	writeLog("Exception: $e");
+	writeLog("$me Exception: $e");
 }
 
 // Send back whatever the response is
