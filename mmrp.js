@@ -25,7 +25,7 @@ app.controller('PartController', function($scope, $http) {
 });
 
 app.controller('TypeController', function($scope, $http) {
-  $http.get('api/type/list').then(function(resp) {
+  $http.get('api/type').then(function(resp) {
     console.log('Success', resp);
     // For JSON responses, resp.data contains the result
     $scope.types = resp.data;
