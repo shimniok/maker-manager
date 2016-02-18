@@ -26,7 +26,7 @@ if ($argc < 0 || $argc > 1) {
 }
 
 // Prep the data access object
-$subtype = new Data($db, 'subtypes', 'id', array('name', 'id'));
+$db = new Data($db, 'subtypes', 'id', array('name', 'id'));
 
 header('Content-Type: application/json');
 
@@ -38,11 +38,11 @@ try {
 		case 'GET':
 			if ($argc == 1) {
 				// Retrieve one
-				$response = $subtype->loadRow('id', $argv[0]);
+				$response = $db->loadRow('id', $argv[0]);
 				writeLog("$me GET id=".$argv[0]);
 			} else {
 				// Retrieve all
-				$response = $subtype->load();
+				$response = $db->load();
 				writeLog("$me GET all");
 			}
 			break;
