@@ -51,7 +51,7 @@ try {
 			if ($json = file_get_contents('php://input')) {
 				$params = json_decode($json, true);
 				$data = array( 'name' => $params['name'] );
-				$data['id'] = $subtype->add($data);
+				$data['id'] = $db->add($data);
 				$response = $data;
 				foreach ($params as $key => $value) {
 					writeLog("$me json decode: params[$key]=($value)");
@@ -63,10 +63,12 @@ try {
 		case 'DELETE':
 			// Delete one
 			if ($argc == 1) {
-				$id = $subtype->del($argv[0]);
-				$response = array( 'id' => $id );
-				echo json_encode($id);
-				writeLog("$me DELETE id=$id");
+				if ($db->del($argv[0])) {
+					$response = array( 'id' => $argv[0] );
+					writeLog("$me DELETE id=$argv[0]");
+				} else {
+					writeLog("$me DELETE fail id=$argv[0]");
+				}
 			} else {
 				writeLog("$me DELETE no id provided");
 			}
@@ -75,7 +77,7 @@ try {
 			if (argc == 1 && isset($_POST['name'])) {
 				$id = $argv[0];
 				$data = array('name' => $_POST['name']);
-				$id = $subtype->update($id, $data);
+				$id = $db->update($id, $data);
 				$response = array( 'id' => $id );
 				writeLog("$me PUT id=$id data=(".implode(' ', $_POST).")");
 			} else {

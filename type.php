@@ -23,12 +23,9 @@ $db = new Data($db, 'types', 'id', array('name', 'id'));
 
 header('Content-Type: application/json');
 
-header('Content-Type: application/json');
-
 $response = array();
 
 try {
-
 	switch($_SERVER['REQUEST_METHOD']){
 		case 'GET':
 			if ($argc == 1) {
@@ -41,6 +38,33 @@ try {
 				writeLog("$me GET all");
 			}
 			break;
+		case 'POST':
+			// Create new
+			if ($json = file_get_contents('php://input')) {
+				$params = json_decode($json, true);
+				$data = array( 'name' => $params['name'] );
+				$data['id'] = $db->add($data);
+				$response = $data;
+				foreach ($params as $key => $value) {
+					writeLog("$me json decode: params[$key]=($value)");
+				}
+			} else {
+				writeLog("$me POST couldn't read php://input");
+			}
+			break;
+		case 'DELETE':
+			// Delete one
+			if ($argc == 1) {
+				if ($db->del($argv[0])) {
+					$response = array( 'id' => $argv[0] );
+					writeLog("$me DELETE id=$id");
+				} else {
+					writeLog("$me DELETE fail id=$argv[0]");
+				}
+			} else {
+				writeLog("$me DELETE no id provided");
+			}
+			break;
 	}
 } catch (Exception $e) {
 	writeLog("$me Exception: $e");
@@ -49,29 +73,5 @@ try {
 // Send back whatever the response is
 // supposed to be, encoded in JSON.
 echo json_encode($response);
-
-/*
-$id = "";
-
-// input validation?
-switch($_GET['mode']) {
-	case 'list' :
-		echo json_encode($type->load());
-		break;
-	case 'update' :
-		$id = $_POST['id'];
-		$data = array('name' => $_POST['name'] );
-		$type->update($id, $data);
-		break;
-	case 'add' :
-		$data = array('name' => $_POST['name'] );
-		$id = $type->add($data);
-		break;
-	case 'delete' :
-		$id = $_POST['id'];
-		$type->del($_POST['id']);
-		break;
-}
-*/
 
 ?>

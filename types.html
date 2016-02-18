@@ -19,9 +19,21 @@
     <tbody>
       <tr ng-repeat="type in types">
         <td>{{ type.id }}</td>
-        <td>{{ type.name }}</td>
+        <td>{{ type.name }}
+          <form name="ActionForm"><input class="delete" type="submit" ng-click="delete(type.id)"/></form>
+        </td>
       </tr>
 		</tbody>
+    <tfoot>
+      <td></td>
+      <td>
+        <form name="SubtypeForm" ng-submit="add()">
+          <input type="text" ng-model="newType.name" />
+          <input class="add" type="submit" />
+        </form>
+      </td>
+		</tfoot>
+
 	</table>
 
 </body>
