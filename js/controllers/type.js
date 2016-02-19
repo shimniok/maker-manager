@@ -4,7 +4,7 @@ angular.module('MakerMRP')
 //
 .controller('TypeController', function($http){
   var controller = this;
-  this.newType = {id: 0, name: ""};
+  this.new = {id: 0, name: ""};
   this.types = [];
   this.editing = null;
   this.errors = null;
@@ -21,12 +21,12 @@ angular.module('MakerMRP')
   });
 
   this.add = function(){
-    console.log('add(): ', controller.newType);
+    console.log('add(): ', controller.new);
     this.editing = null;
-    $http.post('api/type', controller.newType ).then(function(response){
+    $http.post('api/type', controller.new ).then(function(response){
       console.log('Success', response.data);
       controller.types[response.data['id']] = response.data;
-      controller.newType = {};
+      controller.new = {};
     });
   };
 
