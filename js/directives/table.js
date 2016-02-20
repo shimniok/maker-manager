@@ -6,7 +6,8 @@ angular.module('MakerMRP')
     controller: function($scope, $http) {
       $http.get($scope.api).then(function(response){
         // For JSON responses, response.data contains the result
-        $scope.data = response.data;
+        $scope.columns = response.data.columns;
+        $scope.data = response.data.data;
         console.log('Success', $scope.data);
       }, function(err) {
         console.error('Error', err.status);

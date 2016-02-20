@@ -51,7 +51,7 @@ class Data
 
 		$this->_table = $table;
 		$this->_columns = $columns;
-		$this->_columns[] = $pkey; /* ensure we are also returning id in queries */
+		#$this->_columns[] = $pkey; /* ensure we are also returning id in queries */
 		$this->_pkey = $pkey;
 
 		// SELECT SQL statement
@@ -251,7 +251,7 @@ class Data
 			$this->_message = $e->getMessage();
       $this->writeLog($e->getMessage());
     }
-  	return $rows;
+  	return array('columns' => $this->_columns, 'data' => $rows);
 	}
 
 

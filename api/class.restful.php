@@ -2,9 +2,9 @@
 /**
  * REST helper class
  *
- * Given a name ($name), implements REST API, calling back to supplied functions.
+ * Given a name ($_name), implements REST API, calling back to supplied functions.
  *
- * Expects to be called with the following pattern (given: $name="thingy"):
+ * Expects to be called with the following pattern (given: $_name="thingy"):
  *
  * GET BASE_URL/thingy       - Retrieves a list of thingys
  * GET BASE_URL/thingy/12    - Retrieves a specific thingy (#12)
@@ -21,26 +21,28 @@
 Class Restful
 {
   protected $_name;
-  protected $_errormsg;
-  protected $_get_handler;
+  protected $_db;
+  protected $_errmsg;
 
   /**
-   * @param string $name - identifying name used in URI path
+   * @param string $_name - identifying name used in URI path
    */
-  public function __construct($name="")
+  public function __construct($myname="", $mydb=null)
 	{
-    $this->_name = $name;
+    $this->name = $myname;
+    $this->db = $mydb;
   }
 
-  public function handleRequest($db) {
-    // Extract any arguments from the URI
+  public function handleRequest() {
+    // Extract any arguments from the URI, splitting on API name, e.g.,
+    // api/thingy/1 splits on 'thingy', with 1 as the argument
     $argv = preg_split('/\//',
-      preg_replace( '/^.*\/'.$this->_name.'\/{0,1}/', '', $_SERVER['REQUEST_URI']),
+      preg_replace( '/^.*\/'.$this->name.'\/{0,1}/', '', $_SERVER['REQUEST_URI']),
       -1, PREG_SPLIT_NO_EMPTY);
     $argc = count($argv);
 
     if ($argc < 0 || $argc > 1) {
-    	$this->_errormsg = "arg count is wrong (argc=$argc) - ".$_SERVER['REQUEST_URI'];
+    	$this->errormsg = "arg count is wrong (argc=$argc) - ".$_SERVER['REQUEST_URI'];
     	return false;
     } elseif ($argc == 1) {
       $id = $argv[0];
@@ -56,11 +58,11 @@ Class Restful
   		case 'GET':
         if ($argc == 1) {
   				// Retrieve one
-  				$response = $db->loadRow('id', $argv[0]);
+  				$response = $this->db->loadRow('id', $argv[0]);
   				writeLog("GET id=".$argv[0]);
   			} else {
   				// Retrieve all
-  				$response = $db->load();
+          $response = $this->db->load();
   				writeLog("GET all");
   			}
   			break;
