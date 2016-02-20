@@ -1,31 +1,35 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>MakerMRP</title>
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="mmrp.js" type="text/javascript" charset="utf-8"></script>
-</head>
 
-<body ng-app="mmrpApp">
+<p>parts.html</p>
 
-	<table class='editable paginated bordered filtered' ng-controller="PartController">
-		<tbody>
-      <tr ng-repeat="part in parts">
-        <td>{{ part.id }}</td>
-        <td>{{ part.inventory }}</td>
-        <td>{{ part.ordered }}</td>
-        <td>{{ part.partNo }}</td>
-        <td>{{ part.value }}</td>
-        <td>{{ part.footprint }}</td>
-        <td>{{ part.tolerance }}</td>
-        <td>{{ part.voltage }}</td>
-        <td>{{ part.types_id }}</td>
-        <td>{{ part.subtypes_id }}</td>
-      </tr>
-		</tbody>
-	</table>
+<mmrp-table api="api/parts"></mmrp-table>
 
-</body>
-</html>
+<!--
+<table ng-controller="TableController">
+  <thead>
+    <th>ID</th>
+    <th>Inventory</th>
+    <th>Ordered</th>
+    <th>Part #</th>
+    <th>Value</th>
+    <th>Footprint</th>
+    <th>Tolerance</th>
+    <th>Voltage</th>
+    <th>Type</th>
+    <th>Subtype</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="part in parts">
+      <td>{{ part.id }}</td>
+      <td>{{ part.inventory }}</td>
+      <td>{{ part.ordered }}</td>
+      <td>{{ part.partNo }}</td>
+      <td>{{ part.value }}</td>
+      <td>{{ part.footprint }}</td>
+      <td>{{ part.tolerance }}</td>
+      <td>{{ part.voltage }}</td>
+      <td>{{ part.type }}</td>
+      <td>{{ part.subtype }}</td>
+    </tr>
+	</tbody>
+</table>
+-->
