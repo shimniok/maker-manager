@@ -2,8 +2,8 @@
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule api/part(/.*)$ api/parts.php [QSA,NC,L]
-RewriteRule api/product(/.*)$ api/products.php [QSA,NC,L]
-RewriteRule api/type(/*.*)$ api/types.php [QSA,NC,L]
-RewriteRule api/subtype(/*.*)$ api/subtypes.php [QSA,NC,L]
+RewriteRule api/parts(/.*)$ api/parts.php [QSA,NC,L]
+RewriteRule api/products(/.*)$ api/products.php [QSA,NC,L]
+RewriteRule api/types(/*.*)$ api/types.php [QSA,NC,L]
+RewriteRule api/subtypes(/*.*)$ api/subtypes.php [QSA,NC,L]
 </IfModule>
