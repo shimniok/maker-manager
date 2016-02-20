@@ -1,32 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>MakerMRP</title>
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <script src="angular.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="mmrp.js" type="text/javascript" charset="utf-8"></script>
-</head>
 
-<body ng-app="mmrpApp">
-
-  <div ng-controller="ProductController">
-    <table class='editable paginated bordered filtered'>
-      <thead>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Inventory</th>
-        <th>Needed</th>
-        <th>Sold</th>
-      </thead>
-      <tr ng-repeat="product in products">
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.inventory }}</td>
-        <td>{{ product.needed }}</td>
-        <td>{{ product.sold }}</td>
-      </tr>
-  </div>
-
-</body>
-</html>
+<p>products.html</p>
+<mmrp-table api="api/products"></mmrp-table>

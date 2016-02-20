@@ -1,22 +1,17 @@
 angular.module('MakerMRP', ['ngRoute'])
 .config(function($routeProvider){
   $routeProvider
-    /*
-    .when(base, {
-      templateUrl: 'templates/products/index.html'
+    .when('/products', {
+      templateUrl: 'templates/products.html'
     })
-    .when(base+'/products', {
-      templateUrl: 'templates/products/index.hml'
-    })
-    .when(base+'/subtypes', {
-      templateUrl: 'templates/subtypes/index.hml'
-    })
-    */
     .when('/parts', {
       templateUrl: 'templates/parts.html'
     })
     .when('/types', {
       templateUrl: 'templates/types.html',
+    })
+    .when('/subtypes', {
+      templateUrl: 'templates/subtypes.html'
     })
     .otherwise({ redirectTo: '/products'})
 })
