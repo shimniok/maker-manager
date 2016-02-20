@@ -5,16 +5,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="item in data">
-      <td>{{ item['id'] }}</td>
-      <td>{{ item['inventory'] }}</td>
-      <td>{{ item['ordered'] }}</td>
-      <td>{{ item['itemNo'] }}</td>
-      <td>{{ item['value'] }}</td>
-      <td>{{ item['footprint'] }}</td>
-      <td>{{ item['tolerance'] }}</td>
-      <td>{{ item['voltage'] }}</td>
-      <td>{{ item['type'] }}</td>
-      <td>{{ item['subtype'] }}</td>
+      <td ng-repeat="key in columns">{{ item[key] }}</td>
     </tr>
 	</tbody>
 </table>
