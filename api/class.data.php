@@ -173,14 +173,13 @@ class Data
 				$msg .= " :$col=$value";
 			}
       if ($stmt->execute()) {
-				$status = 0;
+				$status = 1;
 			} else {
 				$err = $stmt->errorInfo();
 				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];
-				$status = 1;
 			}
-				$this->writeLog($msg);
-				$stmt->closeCursor();
+			$this->writeLog($msg);
+			$stmt->closeCursor();
   	} catch(PDOException $e) {
 			$this->_message = $e->getMessage();
     	$this->writeLog($e->getMessage());
