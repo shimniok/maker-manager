@@ -9,13 +9,13 @@
  * PUT BASE_URL/thingy/12    - Updates thingy #12
  * DELETE BASE_URL/thingy/12 - Deletes thingy #12
  */
+include_once 'common/base.php';
 include_once 'base.php';
 require 'class.restful.php';
 
-$db = new Data($db, 'parts', 'id', array('id', 'inventory', 'ordered', 'partNo', 'footprint',	'value', 'voltage', 'tolerance', 'types_id', 'subtypes_id'));
+$db = new Data($db, 'products', 'id', array('name', 'id'));
 
-$rest = new Restful("part");
+$rest = new Restful("products");
 
 $rest->handleRequest($db);
-
 ?>

@@ -12,9 +12,9 @@
 include_once 'base.php';
 require 'class.restful.php';
 
-$db = new Data($db, 'types', 'id', array('name', 'id'));
+$db = new Data($db, 'subtypes', 'id', array('name', 'id'));
 
-$rest = new Restful("type");
+$rest = new Restful("subtypes");
 
 $rest->handleRequest($db);
 
