@@ -1,2 +1,4 @@
-constants.inc.php
-inv.log
+constants.php
+*.log
+*.bak
+*.js.map
