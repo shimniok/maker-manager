@@ -1,3 +1,28 @@
 
-<p>products.html</p>
+
+<h1>{{product.name}}</h1>
+<ul>
+  <li>To Build:</li>
+  <li>Built:</li>
+  <li>In Stock:</li>
+</ul>
+
+<mmrp-table api="api/bom/1"></mmrp-table>
+
 <mmrp-table api="api/products"></mmrp-table>
+
+<!--
+<h1>Products</h1>
+<table class="bordered">
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in data">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+    </tr>
+	</tbody>
+</table>
+-->
