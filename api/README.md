@@ -7,3 +7,4 @@
   * DB_USER : username of app account used to access the database
   * DB_PASS : password of app account used to access the
  * Create a file mmrp.log with write permission granted to the webserver
+ * Download and install [Silex](http://silex.sensiolabs.org/) into a subdirectory, silex
