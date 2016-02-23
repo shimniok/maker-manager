@@ -11,10 +11,23 @@
  */
 include_once 'base.php';
 require 'class.restful.php';
+require_once __DIR__.'/silex/vendor/autoload.php';
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+$app = new Silex\Application();
 
 $columns = array('id', 'inventory', 'ordered', 'partNo', 'footprint',	'value', 'voltage', 'tolerance', 'types_id', 'subtypes_id');
 $db = new Data($db, 'parts', 'id', $columns);
-$rest = new Restful('parts', $db);
-$rest->handleRequest();
+
+$app->get('/parts', function() use($db, $columns) {
+  return json_encode($db->load());
+});
+
+$app->get('/parts/{id}', function (Silex\Application $app, $id) use ($db, $columns) {
+  return json_encode($db->loadRow('id', $id));
+});
+
+$app->run();
 
 ?>
