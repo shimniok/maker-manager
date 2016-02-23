@@ -12,7 +12,7 @@
 include_once 'base.php';
 require 'class.restful.php';
 
-$columns = array('id', 'name');
+$columns = array('id', 'inventory', 'needed', 'name');
 $db = new Data($db, 'products', 'id', $columns);
 $rest = new Restful('products', $db);
 $rest->handleRequest();
