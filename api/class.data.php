@@ -323,7 +323,7 @@ class Data
             $this->writeLog($e->getMessage());
         }
 
-        return $entries;
+        return  array('columns' => $this->_columns, 'data' => $entries);
     }
 
     public function call($fctn, $params)

@@ -19,11 +19,11 @@ $app = new Silex\Application();
 $columns = array('id', 'products_id', 'parts_id');
 $db = new Data($db, 'product_part', 'id', $columns);
 
-$app->get('/bom', function() use($db) {
+$app->get('/bom', function() use($db, $columns) {
   return json_encode($db->load());
 });
 
-$app->get('/bom/{id}', function (Silex\Application $app, $id) use ($db) {
+$app->get('/bom/{id}', function (Silex\Application $app, $id) use ($db, $columns) {
   return json_encode($db->loadList('products_id', $id));
 });
 

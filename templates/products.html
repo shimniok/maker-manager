@@ -1,28 +1,59 @@
+<div id="twocolumn">
 
+  <div class="column">
+    <h1>Products</h1>
+    <table class="bordered">
+      <thead>
+        <th>ID</th>
+        <th>Needed</th>
+        <th>Inventory</th>
+        <th>Name</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="product in products" ng-click="select(product.id)">
+          <td>{{product.id}}</td>
+          <td>{{product.needed}}</td>
+          <td>{{product.inventory}}</td>
+          <td>{{product.name}}</td>
+        </tr>
+    	</tbody>
+    </table>
+  </div>
 
-<h1>{{product.name}}</h1>
-<ul>
-  <li>To Build:</li>
-  <li>Built:</li>
-  <li>In Stock:</li>
-</ul>
-
-<mmrp-table api="api/bom/1"></mmrp-table>
-
-<mmrp-table api="api/products"></mmrp-table>
+  <div class="column" ng-hide="selected === null">
+    <h1>{{selected.name}}</h1>
+    <table class="bordered">
+      <thead>
+        <th>ID</th>
+        <th>Inventory</th>
+        <th>Ordered</th>
+        <th>PartNo</th>
+        <th>Footprint</th>
+        <th>Value</th>
+        <th>Voltage</th>
+        <th>Tolerance</th>
+        <th>Type</th>
+        <th>Subtype</th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="part in bom">
+          <td>{{part.id}}</td>
+          <td>{{part.inventory}}</td>
+          <td>{{part.ordered}}</td>
+          <td>{{part.partNo}}</td>
+          <td>{{part.footprint}}</td>
+          <td>{{part.value}}</td>
+          <td>{{part.voltage}}</td>
+          <td>{{part.tolerance}}</td>
+          <td>{{types[part.types_id].name}}</td>
+          <td>{{types[part.subtypes_id].name}}</td>
+        </tr>
+    	</tbody>
+    </table>
+  </div>
+</div>
 
 <!--
-<h1>Products</h1>
-<table class="bordered">
-  <thead>
-    <th>ID</th>
-    <th>Name</th>
-  </thead>
-  <tbody>
-    <tr ng-repeat="item in data">
-      <td>{{item.id}}</td>
-      <td>{{item.name}}</td>
-    </tr>
-	</tbody>
-</table>
+<mmrp-table api="api/products"></mmrp-table>
+
 -->

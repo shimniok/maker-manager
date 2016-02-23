@@ -1,4 +1,14 @@
 
+div.twocolumn {
+	text-align: left;
+	width: 100%;
+}
+
+div.column {
+	float: left;
+	margin-right: 20px;
+}
+
 form {
 	display: inline;
 }

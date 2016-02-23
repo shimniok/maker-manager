@@ -4,6 +4,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule api/parts(/.*)$ api/parts.php [QSA,NC,L]
 RewriteRule api/products(/.*)$ api/products.php [QSA,NC,L]
+RewriteRule api/bom(/.*)$ api/bom.php [QSA,NC,L]
 RewriteRule api/types(/*.*)$ api/types.php [QSA,NC,L]
 RewriteRule api/subtypes(/*.*)$ api/subtypes.php [QSA,NC,L]
 </IfModule>
