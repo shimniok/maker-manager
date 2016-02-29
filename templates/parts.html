@@ -1,9 +1,9 @@
 <h1>Parts</h1>
-<table class="bordered">
+<table class="bordered" id="parts">
   <thead>
     <th>ID</th>
-    <th>Inventory</th>
-    <th>Ordered</th>
+    <th>Inv</th>
+    <th>Ord</th>
     <th>PartNo</th>
     <th>Footprint</th>
     <th>Value</th>
@@ -11,6 +11,7 @@
     <th>Tolerance</th>
     <th>Type</th>
     <th>Subtype</th>
+    <th class="edit">Edit</th>
   </thead>
   <tbody>
     <tr ng-repeat="part in parts">
@@ -47,6 +48,8 @@
         <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="rowform">
           {{ subtypes[part.subtypes_id].name }}
         </span>
+      </td>
+      <td>
         <mmrp-edit></mmrp-edit>
         <form editable-form name="rowform" ng-show="rowform.$visible">
           <mmrp-save></mmrp-save>
@@ -84,6 +87,8 @@
     </td>
     <td>
       <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="newform"></span>
+    </td>
+    <td>
       <mmrp-add></mmrp-add>
       <form editable-form name="newform" ng-show="newform.$visible">
         <mmrp-save></mmrp-save>

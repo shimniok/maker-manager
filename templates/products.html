@@ -2,12 +2,13 @@
 
   <div class="column">
     <h1>Products</h1>
-    <table class="bordered">
+    <table class="bordered" id="products">
       <thead>
-        <th id="id">ID</th>
-        <th id="needed">Needed</th>
-        <th id="inventory">Inventory</th>
-        <th id="name">Name</th>
+        <th>ID</th>
+        <th>Need</th>
+        <th>Inv</th>
+        <th>Name</th>
+        <th class='edit'>Edit</th>
       </thead>
       <tbody>
         <tr ng-repeat="product in products" ng-click="select(product.id)">
@@ -20,6 +21,8 @@
           </td>
           <td>
             <span editable-text="product.name" e-name="name" e-form="rowform">{{ product.name || "name" }}</span>
+          </td>
+          <td>
             <mmrp-edit></mmrp-edit>
             <form editable-form name="rowform" ng-show="rowform.$visible">
               <mmrp-save></mmrp-save>
@@ -39,6 +42,8 @@
         </td>
         <td>
           <span editable-text="new.name" e-name="name" e-form="newform"></span>
+        </td>
+        <td>
           <mmrp-add></mmrp-add>
           <form editable-form name="newform" ng-show="newform.$visible">
             <mmrp-save></mmrp-save>

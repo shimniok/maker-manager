@@ -330,8 +330,18 @@ table {
 
 table {
 	font: 10pt Georgia, Baskerville, Serif;
-	width: 1280px;
-	margin: 20px;
+}
+
+table#products{
+	width: 400px;
+}
+
+table#parts {
+	width: 1200px;
+}
+
+th.edit {
+	width: 100px;
 }
 
 /*
