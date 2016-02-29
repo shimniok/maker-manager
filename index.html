@@ -9,7 +9,12 @@
   <script src="js/angular-route.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/product.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/directives/mmrp-editable.js" type="text/javascript" charset="utf-8"></<script></script>
+  <script src="js/controllers/part.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/directives/mmrp-edit.js" type="text/javascript" charset="utf-8"></<script></script>
+  <script src="js/directives/mmrp-save.js" type="text/javascript" charset="utf-8"></<script></script>
+  <script src="js/directives/mmrp-cancel.js" type="text/javascript" charset="utf-8"></<script></script>
+  <script src="js/directives/mmrp-trash.js" type="text/javascript" charset="utf-8"></<script></script>
+  <script src="js/directives/show-on-hover.js" type="text/javascript" charset="utf-8"></<script></script>
   <link href="css/xeditable.css" rel="stylesheet">
   <script src="js/xeditable.js"></script>
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -17,10 +22,10 @@
 
 <body ng-app="MakerMRP">
 
-  <a href="#/types">types</a> |
-  <a href="#/subtypes">subtypes</a> |
   <a href="#/products">products</a> |
   <a href="#/parts">parts</a> |
+  <a href="#/types">types</a> |
+  <a href="#/subtypes">subtypes</a>
 
   <div ng-view>
 

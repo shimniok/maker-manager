@@ -4,10 +4,10 @@
     <h1>Products</h1>
     <table class="bordered">
       <thead>
-        <th>ID</th>
-        <th>Needed</th>
-        <th>Inventory</th>
-        <th>Name</th>
+        <th id="id">ID</th>
+        <th id="needed">Needed</th>
+        <th id="inventory">Inventory</th>
+        <th id="name">Name</th>
       </thead>
       <tbody>
         <tr ng-repeat="product in products" ng-click="select(product.id)">
@@ -20,19 +20,11 @@
           </td>
           <td>
             <span editable-text="product.name" e-name="name" e-form="rowform">{{product.name || "name"}}</span>
-            <button class="btn btn-xs btn-default pull-right" ng-show="!rowform.$visible" ng-click="rowform.$show()">
-              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-            </button>
+            <mmrp-edit></mmrp-edit>
             <form editable-form name="rowform" ng-show="rowform.$visible">
-              <button type="submit" class="btn btn-xs btn-primary" ng-disabled="editableForm.$waiting">
-                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-              </button>
-              <button class="btn btn-xs btn-default" ng-click="editableForm.$cancel()">
-                <span class="glyphicon glyphicon-remove"></span>
-              </button>
-              <button class="btn btn-xs btn-danger" ng-click="remove($index)">
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-              </button>
+              <mmrp-save></mmrp-save>
+              <mmrp-cancel></mmrp-cancel>
+              <mmrp-trash></mmrp-trash>
             </form>
           </td>
         </tr>

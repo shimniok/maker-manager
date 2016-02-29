@@ -1,3 +1,59 @@
-
-<p>parts.html</p>
-<mmrp-table api="api/parts"></mmrp-table>
+<h1>Parts</h1>
+<table class="bordered">
+  <thead>
+    <th>ID</th>
+    <th>Inventory</th>
+    <th>Ordered</th>
+    <th>PartNo</th>
+    <th>Footprint</th>
+    <th>Value</th>
+    <th>Voltage</th>
+    <th>Tolerance</th>
+    <th>Type</th>
+    <th>Subtype</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="part in parts">
+      <td>
+        <span editable-text="part.id" e-name="id" e-form="rowform">{{part.id || "0"}}</span>
+      </td>
+      <td>
+        <span editable-text="part.inventory" e-name="inventory" e-form="rowform">{{part.inventory}}</span>
+      </td>
+      <td>
+        <span editable-text="part.ordered" e-name="ordered" e-form="rowform">{{part.ordered}}</span>
+      </td>
+      <td>
+        <span editable-text="part.partNo" e-name="partNo" e-form="rowform">{{part.partNo}}</span>
+      </td>
+      <td>
+        <span editable-text="part.footprint" e-name="footprint" e-form="rowform">{{part.footprint}}</span>
+      </td>
+      <td>
+        <span editable-text="part.value" e-name="value" e-form="rowform">{{part.value}}</span>
+      </td>
+      <td>
+        <span editable-text="part.voltage" e-name="voltage" e-form="rowform">{{part.voltage}}</span>
+      </td>
+      <td>
+        <span editable-text="part.tolerance" e-name="tolerance" e-form="rowform">{{part.tolerance}}</span>
+      </td>
+      <td>
+        <span editable-select="part.types_id" e-name="type" e-ng-options="t.id as t.name for t in types" e-form="rowform">
+          {{ types[part.types_id].name }}
+        </span>
+      </td>
+      <td>
+        <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="rowform">
+          {{ subtypes[part.subtypes_id].name }}
+        </span>
+        <mmrp-edit></mmrp-edit>
+        <form editable-form name="rowform" ng-show="rowform.$visible">
+          <mmrp-save></mmrp-save>
+          <mmrp-cancel></mmrp-cancel>
+          <mmrp-trash></mmrp-trash>
+        </form>
+      </td>
+    </tr>
+  </tbody>
+</table>

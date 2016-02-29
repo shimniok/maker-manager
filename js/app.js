@@ -6,7 +6,8 @@ angular.module('MakerMRP', ['ngRoute', 'xeditable'])
       controller: 'ProductController'
     })
     .when('/parts', {
-      templateUrl: 'templates/parts.html'
+      templateUrl: 'templates/parts.html',
+      controller: 'PartController'
     })
     .when('/types', {
       templateUrl: 'templates/types.html',

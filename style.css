@@ -21,12 +21,8 @@ form input[type='text'], form input[type='text']:hover {
  * Button sprites
  */
 
-.show-on-hover {
-	display: none;
-}
-
-.show-on-hover:hover {
-	display: block;
+input[type='text']#needed {
+	width: 10px;
 }
 
 input[type='button'], input[type='submit'] {
