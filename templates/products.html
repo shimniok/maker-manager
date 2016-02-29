@@ -13,13 +13,13 @@
         <tr ng-repeat="product in products" ng-click="select(product.id)">
           <td>{{product.id}}</td>
           <td>
-            <span editable-text="product.needed" e-name="needed" e-form="rowform">{{ product.needed || "needed"}}</span>
+            <span editable-text="product.needed" e-name="needed" e-form="rowform">{{ product.needed || "0" }}</span>
           </td>
           <td>
-            <span editable-text="product.inventory" e-name="inventory" e-form="rowform">{{product.inventory || "inventory"}}</span>
+            <span editable-text="product.inventory" e-name="inventory" e-form="rowform">{{product.inventory || "0" }}</span>
           </td>
           <td>
-            <span editable-text="product.name" e-name="name" e-form="rowform">{{product.name || "name"}}</span>
+            <span editable-text="product.name" e-name="name" e-form="rowform">{{ product.name || "name" }}</span>
             <mmrp-edit></mmrp-edit>
             <form editable-form name="rowform" ng-show="rowform.$visible">
               <mmrp-save></mmrp-save>
@@ -29,8 +29,25 @@
           </td>
         </tr>
     	</tbody>
+      <tfoot>
+        <td></td>
+        <td>
+          <span editable-text="new.needed" e-name="needed" e-form="newform"></span>
+        </td>
+        <td>
+          <span editable-text="new.inventory" e-name="inventory" e-form="newform"></span>
+        </td>
+        <td>
+          <span editable-text="new.name" e-name="name" e-form="newform"></span>
+          <mmrp-add></mmrp-add>
+          <form editable-form name="newform" ng-show="newform.$visible">
+            <mmrp-save></mmrp-save>
+            <mmrp-cancel></mmrp-cancel>
+            <mmrp-trash></mmrp-trash>
+          </form>
+        </td>
+      </tfoot>
     </table>
-    <button class="btn btn-default" ng-click="add()">Add row</button>
   </div>
 
   <div class="column" ng-hide="selected === null">

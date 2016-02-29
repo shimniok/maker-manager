@@ -267,7 +267,7 @@ table {
     border-bottom: 1px solid #f2f2f2;
 }
 
-.bordered th, .bordered tr#last {
+.bordered th, .bordered tfoot {
     background-color: #dce9f9;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#ebf3fc), to(#dce9f9));
     background-image: -webkit-linear-gradient(top, #ebf3fc, #dce9f9);
@@ -316,7 +316,7 @@ table {
     border-radius: 0 0 6px 0;
 }
 
-.bordered th, .bordered tr#last td {
+.bordered th, .bordered tfoot td {
     padding: 5px 5px 5px 5px;
     border-bottom: 1px solid #f2f2f2;
 }
