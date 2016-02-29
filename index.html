@@ -9,6 +9,7 @@
   <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/product.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/part.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/controllers/tabs.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/directives/mmrp-add.js" type="text/javascript" charset="utf-8"></<script></script>
   <script src="js/directives/mmrp-edit.js" type="text/javascript" charset="utf-8"></<script></script>
   <script src="js/directives/mmrp-save.js" type="text/javascript" charset="utf-8"></<script></script>
@@ -20,17 +21,17 @@
   <script src="js/xeditable.js"></script>
 
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <script src="js/bootstrap.min.js" type="text/javascript" charset="utf-8"></<script></script>
 
   <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body ng-app="MakerMRP">
 
-  <a href="#/products">products</a> |
-  <a href="#/parts">parts</a> |
-  <a href="#/types">types</a> |
-  <a href="#/subtypes">subtypes</a>
+  <ul class="nav nav-tabs" ng-controller="TabsController">
+    <li ng-class="tabClass(tab)" ng-repeat="tab in tabs" tab="tab">
+      <a href="{{tab.link}}" ng-click="setSelectedTab(tab)">{{tab.label}}</a>
+    </li>
+  </ul>
 
   <div ng-view>
 
