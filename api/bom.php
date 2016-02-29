@@ -10,7 +10,6 @@
  * DELETE BASE_URL/thingy/12 - Deletes thingy #12
  */
 include_once 'base.php';
-require_once 'class.restful.php';
 require_once __DIR__.'/silex/vendor/autoload.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

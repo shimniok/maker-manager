@@ -1,4 +1,4 @@
-angular.module('MakerMRP', ['ngRoute'])
+angular.module('MakerMRP', ['ngRoute', 'xeditable'])
 .config(function($routeProvider){
   $routeProvider
     .when('/products', {
@@ -26,4 +26,7 @@ angular.module('MakerMRP', ['ngRoute'])
   // extra
   $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';
   $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
-}]);
+}])
+.run(function(editableOptions) {
+  editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
+});

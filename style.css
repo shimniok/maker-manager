@@ -21,6 +21,14 @@ form input[type='text'], form input[type='text']:hover {
  * Button sprites
  */
 
+.show-on-hover {
+	display: none;
+}
+
+.show-on-hover:hover {
+	display: block;
+}
+
 input[type='button'], input[type='submit'] {
 	width: 22px;
 	height: 23px;
@@ -46,22 +54,25 @@ input.add:hover {
 	background: url('images/icons.png') no-repeat 0px -23px;
 }
 
+/*
 input.delete {
 	background: url('images/icons.png') no-repeat -22px -0px;
 }
 input.delete:hover {
 	background: url('images/icons.png') no-repeat -22px -23px;
 }
+*/
 
-input.trash {
+input.delete {
 	margin-left: 15px;
 	background: url('images/icons.png') no-repeat -110px -0px;
 }
-input.trash:hover {
+input.delete:hover {
 	background: url('images/icons.png') no-repeat -110px -23px;
 }
 
 input.edit {
+	float: right;
 	background: url('images/icons.png') no-repeat -88px 0px;
 }
 input.edit:hover {

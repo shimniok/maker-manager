@@ -12,12 +12,33 @@
       <tbody>
         <tr ng-repeat="product in products" ng-click="select(product.id)">
           <td>{{product.id}}</td>
-          <td>{{product.needed}}</td>
-          <td>{{product.inventory}}</td>
-          <td>{{product.name}}</td>
+          <td>
+            <span editable-text="product.needed" e-name="needed" e-form="rowform">{{ product.needed || "needed"}}</span>
+          </td>
+          <td>
+            <span editable-text="product.inventory" e-name="inventory" e-form="rowform">{{product.inventory || "inventory"}}</span>
+          </td>
+          <td>
+            <span editable-text="product.name" e-name="name" e-form="rowform">{{product.name || "name"}}</span>
+            <button class="btn btn-xs btn-default pull-right" ng-show="!rowform.$visible" ng-click="rowform.$show()">
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            </button>
+            <form editable-form name="rowform" ng-show="rowform.$visible">
+              <button type="submit" class="btn btn-xs btn-primary" ng-disabled="editableForm.$waiting">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+              </button>
+              <button class="btn btn-xs btn-default" ng-click="editableForm.$cancel()">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+              <button class="btn btn-xs btn-danger" ng-click="remove($index)">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              </button>
+            </form>
+          </td>
         </tr>
     	</tbody>
     </table>
+    <button class="btn btn-default" ng-click="add()">Add row</button>
   </div>
 
   <div class="column" ng-hide="selected === null">
@@ -46,7 +67,7 @@
           <td>{{part.voltage}}</td>
           <td>{{part.tolerance}}</td>
           <td>{{types[part.types_id].name}}</td>
-          <td>{{types[part.subtypes_id].name}}</td>
+          <td>{{subtypes[part.subtypes_id].name}}</td>
         </tr>
     	</tbody>
     </table>
