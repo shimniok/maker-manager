@@ -16,7 +16,7 @@ angular.module('MakerMRP')
 
     $http.get('api/products/'+$stateParams.id).then(function(resp){
       console.log('products.bom(id): api/products Success', resp);
-      $scope.product = resp.data.data;
+      $scope.product = resp.data;
     }, function(err){
       console.error('ERR', err);
     });

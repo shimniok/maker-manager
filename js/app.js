@@ -20,6 +20,16 @@ angular.module('MakerMRP', ['ui.router', 'xeditable'])
       url: "/parts",
       templateUrl: "templates/parts.html",
       controller: "PartController"
+    })
+    .state('types', {
+      url: "/types",
+      templateUrl: "templates/types.html",
+      controller: "TypesController"
+    })
+    .state('subtypes', {
+      url: "/types",
+      templateUrl: "templates/subtypes.html",
+      controller: "SubtypesController"
     });
 })
 /*

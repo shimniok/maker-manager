@@ -7,6 +7,7 @@
   <script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/angular-route.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/controllers/menu.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/product.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/bom.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/part.js" type="text/javascript" charset="utf-8"></script>
@@ -30,8 +31,14 @@
 
 <body ng-app="MakerMRP">
 
-  <a ui-sref="products">products</a>
-  <a ui-sref="parts">parts</a>
+  <ul class="nav nav-tabs" ng-controller="MenuController">
+    <li role="presentation" ui-sref-active="active"><a ui-sref="products">products</a></li>
+    <li role="presentation" ui-sref-active="active"><a ui-sref="parts">parts</a></li>
+    <li role="presentation" ui-sref-active="active"><a ui-sref="types">types</a></li>
+    <li role="presentation" ui-sref-active="active"><a ui-sref="subtypes">subtypes</a></li>
+  </ul>
+
+
 
   <div ui-view>
 
