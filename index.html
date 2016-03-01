@@ -7,12 +7,12 @@
   <script src="js/angular.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/angular-route.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/controllers/menu.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/controllers/tabs.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/product.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/bom.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/part.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/type.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/controllers/subtype.js" type="text/javascript" charset="utf-8"></script>  
+  <script src="js/controllers/subtype.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/directives/mmrp-add.js" type="text/javascript" charset="utf-8"></<script></script>
   <script src="js/directives/mmrp-edit.js" type="text/javascript" charset="utf-8"></<script></script>
   <script src="js/directives/mmrp-save.js" type="text/javascript" charset="utf-8"></<script></script>
@@ -32,11 +32,10 @@
 
 <body ng-app="MakerMRP">
 
-  <ul class="nav nav-tabs" ng-controller="MenuController">
-    <li role="presentation" ui-sref-active="active"><a ui-sref="products">products</a></li>
-    <li role="presentation" ui-sref-active="active"><a ui-sref="parts">parts</a></li>
-    <li role="presentation" ui-sref-active="active"><a ui-sref="types">types</a></li>
-    <li role="presentation" ui-sref-active="active"><a ui-sref="subtypes">subtypes</a></li>
+  <ul class="nav nav-tabs" ng-controller="TabController">
+    <li role="presentation" ui-sref-active="active" ng-repeat="tab in tabs">
+      <a ui-sref="{{tab.link}}">{{tab.label}}</a>
+    </li>
   </ul>
 
 

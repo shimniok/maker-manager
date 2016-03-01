@@ -3,33 +3,23 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // TABS Controller
 //
-.controller('TabsController', function($scope, $http){
+.controller('TabController', function($scope){
   $scope.tabs = [
     {
-      link: "#/products",
+      link: "products",
       label: "products"
     },
     {
-      link: "#/parts",
+      link: "parts",
       label: "parts"
     },
     {
-      link: "#/types",
+      link: "types",
       label: "types"
     },
     {
-      link: "#/subtypes",
+      link: "subtypes",
       label: "subtypes"
     }
   ];
-  $scope.selected = $scope.tabs[0];
-
-  $scope.setSelectedTab = function(tab){
-    $scope.selected = tab;
-  };
-
-  $scope.tabClass = function(tab){
-    return (tab.label === $scope.selected.label) ? "active" : "";
-  };
-
 });
