@@ -1,40 +1,39 @@
-
-<p>types.html</p>
-<mmrp-table api="api/types"></mmrp-table>
-
-<!--
-
 <h1>Types</h1>
 <table class='bordered'>
   <thead>
     <th>ID</th>
     <th>Name</th>
+    <th>Edit</th>
   </thead>
   <tbody>
-    <tr ng-repeat="type in typeCtrl.types">
-      <td>{{ type.id }}</td>
-      <td ng-form>
-        <div ng-show="typeCtrl.editing === type">
-          <input type="text" ng-model="type.name" />
-          <input class="save" type="submit" ng-click="typeCtrl.save(type)" />
-          <input class="cancel" type="submit" ng-click="typeCtrl.editing = null" />
-          <input class="trash" type="submit" ng-click="typeCtrl.delete(type.id)" />
-        </div>
-        <div ng-hide="typeCtrl.editing === type" ng-click="typeCtrl.editing = type" >
-          {{ type.name }}
-        </div>
+    <tr ng-repeat="type in types">
+      <td>{{type.id}}</td>
+      <td>
+        <span editable-text="type.name" e-name="name" e-form="rowform">{{type.name||"name"}}</span>
+      </td>
+      <td>
+        <mmrp-edit></mmrp-edit>
+        <form editable-form name="rowform" ng-show="rowform.$visible">
+          <mmrp-save></mmrp-save>
+          <mmrp-cancel></mmrp-cancel>
+          <mmrp-trash></mmrp-trash>
+        </form>
       </td>
     </tr>
   </tbody>
-  <tfoot>
+  <tfoot class="">
     <td></td>
+    <td><span editable-text="new.name" e-name="name" e-form="newform">{{new.name}}</span></td>
     <td>
-      <form name="AddNewForm" ng-submit="typeCtrl.add()">
-        <input type="text" ng-model="typeCtrl.new.name" />
-        <input class="add" type="submit" />
+      <mmrp-add></mmrp-add>
+      <form editable-form name="newform" ng-show="newform.$visible" onaftersave="add()">
+        <mmrp-save></mmrp-save>
+        <mmrp-cancel></mmrp-cancel>
+        <mmrp-trash></mmrp-trash>
       </form>
     </td>
 	</tfoot>
 </table>
+<!--
 <div class="error" ng-if="typeCtrl.errors">Controller Error: {{typeCtrl.errors}}</div>
 -->

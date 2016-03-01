@@ -2,46 +2,42 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // TYPE Controller
 //
-.controller('TypeController', function($http){
-  var controller = this;
-  this.new = {id: 0, name: ""};
-  this.types = [];
-  this.editing = null;
-  this.errors = null;
+.controller('TypeController', function($http, $scope){
+  $scope.types = [];
+  $scope.new = [];
 
-  $http.get('api/type').then(function(response){
-    console.log('Success', response);
+  $http.get('api/types').then(function(resp){
+    console.log('Success', resp);
     // For JSON responses, response.data contains the result
-    controller.types = response.data;
-    console.log('Success', controller.types);
+    $scope.types = resp.data.data;
+    console.log('Success', $scope.types);
   }, function(err) {
     console.error('Error', err.status);
-    controller.errors = err.status;
+    $scope.errors = err.status;
     // err.status will contain the status code
   });
 
-  this.add = function(){
-    console.log('add(): ', controller.new);
-    this.editing = null;
-    $http.post('api/type', controller.new ).then(function(response){
-      console.log('Success', response.data);
-      controller.types[response.data['id']] = response.data;
+  $scope.add = function(){
+    console.log('add(): ', $scope.new);
+    $http.post('api/types', $scope.new).then(function(resp){
+      console.log('Success', resp.data);
+      $scope.types[resp.data['id']] = resp.data;
       controller.new = {};
     });
   };
 
-  this.delete = function(id){
+  $scope.delete = function(id){
     console.log('delete(): ', controller.types[id], id);
-    $http.delete('api/type/'+id).then(function(response){
-      console.log('Success', response.data);
+    $http.delete('api/types/'+id).then(function(resp){
+      console.log('Success', resp.data);
       delete controller.types[id];
     });
   };
 
-  this.save = function(type){
+  $scope.save = function(type){
     console.log('save(): ', type);
-    $http.put('api/type'+type.id, type ).then(function(response){
-      console.log('Success', response.data);
+    $http.put('api/types/'+type.id, type ).then(function(resp){
+      console.log('Success', resp.data);
       controller.types[type.id] = type;
       controller.editing = null;
     });

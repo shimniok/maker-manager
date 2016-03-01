@@ -24,12 +24,12 @@ angular.module('MakerMRP', ['ui.router', 'xeditable'])
     .state('types', {
       url: "/types",
       templateUrl: "templates/types.html",
-      controller: "TypesController"
+      controller: "TypeController"
     })
     .state('subtypes', {
       url: "/types",
       templateUrl: "templates/subtypes.html",
-      controller: "SubtypesController"
+      controller: "SubtypeController"
     });
 })
 /*
