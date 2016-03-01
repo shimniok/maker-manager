@@ -15,8 +15,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="part in parts">
-      <td>
-        <span editable-text="part.id" e-name="id" e-form="rowform">{{part.id || "0"}}</span>
+      <td>{{part.id}}</span>
       </td>
       <td>
         <span editable-text="part.inventory" e-name="inventory" e-form="rowform">{{part.inventory}}</span>
