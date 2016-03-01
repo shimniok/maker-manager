@@ -1,7 +1,35 @@
-angular.module('MakerMRP', ['ngRoute', 'xeditable'])
+angular.module('MakerMRP', ['ui.router', 'xeditable'])
+.config(function($stateProvider, $urlRouterProvider) {
+  //
+  // For any unmatched url, redirect to /state1
+  $urlRouterProvider.otherwise("/products");
+  //
+  // Now set up the states
+  $stateProvider
+    .state('products', {
+      url: "/products",
+      templateUrl: "templates/products.html",
+      controller: "ProductController"
+    })
+    .state('products.bom', {
+      url: "/bom/:id",
+      templateUrl: "templates/bom.html",
+      controller: "BomController"
+    })
+    .state('parts', {
+      url: "/parts",
+      templateUrl: "templates/parts.html",
+      controller: "PartController"
+    });
+})
+/*
 .config(function($routeProvider){
   $routeProvider
     .when('/products', {
+      templateUrl: 'templates/products.html',
+      controller: 'ProductController'
+    })
+    .when('/products/bom/:id', {
       templateUrl: 'templates/products.html',
       controller: 'ProductController'
     })
@@ -17,6 +45,8 @@ angular.module('MakerMRP', ['ngRoute', 'xeditable'])
     })
     .otherwise({ redirectTo: '/products'})
 })
+*/
+
 .config(['$httpProvider', function($httpProvider) {
   //initialize get if not there
   if (!$httpProvider.defaults.headers.get) {

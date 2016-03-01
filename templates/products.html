@@ -11,7 +11,7 @@
         <th class='edit'>Edit</th>
       </thead>
       <tbody>
-        <tr ng-repeat="product in products" ng-click="select(product.id)">
+        <tr ng-repeat="product in products">
           <td>{{product.id}}</td>
           <td>
             <span editable-text="product.needed" e-name="needed" e-form="rowform">{{ product.needed || "0" }}</span>
@@ -23,6 +23,11 @@
             <span editable-text="product.name" e-name="name" e-form="rowform">{{ product.name || "name" }}</span>
           </td>
           <td>
+            <a ui-sref="products.bom({id: product.id})">
+              <button class="btn btn-xs btn-default pull-right" ng-show="!rowform.$visible">
+                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+              </button>
+            </a>
             <mmrp-edit></mmrp-edit>
             <form editable-form name="rowform" ng-show="rowform.$visible">
               <mmrp-save></mmrp-save>
@@ -55,6 +60,11 @@
   </div>
 
   <div class="column" ng-hide="selected === null">
+    <div ui-view></div>
+  </div>
+</div>
+
+<!--
     <h1>{{selected.name}}</h1>
     <table class="bordered">
       <thead>
@@ -68,6 +78,7 @@
         <th>Tolerance</th>
         <th>Type</th>
         <th>Subtype</th>
+        <th class='edit'>Edit</th>
       </thead>
       <tbody>
         <tr ng-repeat="part in bom">
@@ -81,11 +92,11 @@
           <td>{{part.tolerance}}</td>
           <td>{{types[part.types_id].name}}</td>
           <td>{{subtypes[part.subtypes_id].name}}</td>
+          <td></td>
         </tr>
     	</tbody>
     </table>
-  </div>
-</div>
+-->
 
 <!--
 <mmrp-table api="api/products"></mmrp-table>
