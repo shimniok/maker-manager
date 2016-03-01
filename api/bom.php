@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 $app = new Silex\Application();
-$columns = array('id', 'products_id', 'parts_id');
+$columns = array('id', 'products_id', 'parts_id', 'qty');
 $db = new Data($db, 'product_part', 'id', $columns);
 
 $app->get('/bom', function() use($db, $columns) {
