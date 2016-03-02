@@ -8,15 +8,13 @@ angular.module('MakerMRP')
 	data.types = [];
 	data.subtypes = [];
 
-	/*
   $http.get('api/parts').then(function(resp) {
-    this.parts = resp.data.data;
-    console.log('data: api/parts Success', parts);
+    data.parts = resp.data.data;
+    console.log('data: api/parts Success', data.parts);
   }, function(err) {
     console.error('ERR', err);
     // err.status will contain the status code
   });
-	*/
 
   $http.get('api/products').then(function(resp) {
     data.products = resp.data.data;

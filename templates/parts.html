@@ -14,7 +14,7 @@
     <th class="edit">Edit</th>
   </thead>
   <tbody>
-    <tr ng-repeat="part in parts">
+    <tr ng-repeat="part in data.parts">
       <td>{{part.id}}</span>
       </td>
       <td>
@@ -40,12 +40,12 @@
       </td>
       <td>
         <span editable-select="part.types_id" e-name="type" e-ng-options="t.id as t.name for t in types" e-form="rowform">
-          {{ types[part.types_id].name }}
+          {{ data.types[part.types_id].name }}
         </span>
       </td>
       <td>
         <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="rowform">
-          {{ subtypes[part.subtypes_id].name }}
+          {{ data.subtypes[part.subtypes_id].name }}
         </span>
       </td>
       <td>
