@@ -2,7 +2,11 @@ angular.module('MakerMRP')
 .factory('data', ['$http', function($http){
 	var data = {};
 
+	data.products = [];
+	data.parts = [];
+	data.boms = [];
 	data.types = [];
+	data.subtypes = [];
 
 	/*
   $http.get('api/parts').then(function(resp) {
@@ -12,15 +16,17 @@ angular.module('MakerMRP')
     console.error('ERR', err);
     // err.status will contain the status code
   });
+	*/
 
   $http.get('api/products').then(function(resp) {
-    this.products = resp.data.data;
-    console.log('data: api/products Success', products);
+    data.products = resp.data.data;
+    console.log('data: api/products Success', data.products);
   }, function(err) {
     console.error('data: api/products ERR', err);
     // err.status will contain the status code
   });
 
+	/*
   $http.get('api/boms').then(function(resp) {
     this.boms = resp.data.data;
     console.log('data: api/boms Success', boms);

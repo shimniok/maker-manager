@@ -2,19 +2,10 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // PRODUCT Controller
 //
-.controller('ProductController', function($scope, $http, $location){
-  $scope.products = null;
-  $scope.parts = null;
-  $scope.types = null;
-  $scope.subtypes = null;
+.controller('ProductController', function(data, $scope, $http, $location){
+  $scope.data = data;
 
-  $http.get('api/products').then(function(resp){
-    console.log('products: Success', resp);
-    $scope.products = resp.data.data;
-  }, function(err){
-    console.error('ERR', err);
-  });
-
+  /*
   $scope.select = function(id){
     if (id !== ''){
       $http.get('api/bom/'+id).then(function(resp){
@@ -32,5 +23,6 @@ angular.module('MakerMRP')
       });
     }
   };
+  */
 
 });
