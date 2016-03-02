@@ -1,4 +1,4 @@
-constants.php
+config.php
 *.log
 *.bak
 *.js.map
