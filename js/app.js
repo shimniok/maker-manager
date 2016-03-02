@@ -32,30 +32,6 @@ angular.module('MakerMRP', ['ui.router', 'xeditable'])
       controller: "SubtypeController"
     });
 })
-/*
-.config(function($routeProvider){
-  $routeProvider
-    .when('/products', {
-      templateUrl: 'templates/products.html',
-      controller: 'ProductController'
-    })
-    .when('/products/bom/:id', {
-      templateUrl: 'templates/products.html',
-      controller: 'ProductController'
-    })
-    .when('/parts', {
-      templateUrl: 'templates/parts.html',
-      controller: 'PartController'
-    })
-    .when('/types', {
-      templateUrl: 'templates/types.html',
-    })
-    .when('/subtypes', {
-      templateUrl: 'templates/subtypes.html'
-    })
-    .otherwise({ redirectTo: '/products'})
-})
-*/
 
 .config(['$httpProvider', function($httpProvider) {
   //initialize get if not there
