@@ -2,10 +2,11 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // TYPE Controller
 //
-.controller('TypeController', function($http, $scope){
-  $scope.types = [];
+.controller('TypeController', function(data, $scope){
+  $scope.data = data;
   $scope.new = [];
 
+  /*
   $http.get('api/types').then(function(resp){
     console.log('Success', resp);
     // For JSON responses, response.data contains the result
@@ -13,24 +14,24 @@ angular.module('MakerMRP')
     console.log('Success', $scope.types);
   }, function(err) {
     console.error('Error', err.status);
-    $scope.errors = err.status;
     // err.status will contain the status code
   });
 
   $scope.add = function(){
-    console.log('add(): ', $scope.new);
-    $http.post('api/types', $scope.new).then(function(resp){
+    console.log('add(): ', JSON.stringify($scope.new));
+    $http.post('api/types', JSON.stringify($scope.new)).then(function(resp){
       console.log('Success', resp.data);
-      $scope.types[resp.data['id']] = resp.data;
-      controller.new = {};
+      var id = resp.data.id;
+      $scope.types[id] = { name: resp.data.name, id: resp.data.id };
+      $scope.new = {};
     });
   };
 
-  $scope.delete = function(id){
-    console.log('delete(): ', controller.types[id], id);
+  $scope.remove = function(id){
+    console.log('delete(): ', id, $scope.types[id]);
     $http.delete('api/types/'+id).then(function(resp){
       console.log('Success', resp.data);
-      delete controller.types[id];
+      delete $scope.types[id];
     });
   };
 
@@ -38,9 +39,10 @@ angular.module('MakerMRP')
     console.log('save(): ', type);
     $http.put('api/types/'+type.id, type ).then(function(resp){
       console.log('Success', resp.data);
-      controller.types[type.id] = type;
-      controller.editing = null;
+      $scope.types[type.id] = type;
+      $scope.editing = null;
     });
   };
+  */
 
 });

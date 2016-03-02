@@ -6,7 +6,7 @@
     <th>Edit</th>
   </thead>
   <tbody>
-    <tr ng-repeat="type in types">
+    <tr ng-repeat="type in data.types">
       <td>{{type.id}}</td>
       <td>
         <span editable-text="type.name" e-name="name" e-form="rowform">{{type.name||"name"}}</span>
@@ -16,7 +16,7 @@
         <form editable-form name="rowform" ng-show="rowform.$visible">
           <mmrp-save></mmrp-save>
           <mmrp-cancel></mmrp-cancel>
-          <mmrp-trash></mmrp-trash>
+          <mmrp-trash ng-click="remove(type.id)"></mmrp-trash>
         </form>
       </td>
     </tr>
@@ -29,7 +29,6 @@
       <form editable-form name="newform" ng-show="newform.$visible" onaftersave="add()">
         <mmrp-save></mmrp-save>
         <mmrp-cancel></mmrp-cancel>
-        <mmrp-trash></mmrp-trash>
       </form>
     </td>
 	</tfoot>
