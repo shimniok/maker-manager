@@ -1,3 +1,38 @@
-
-<p>subtypes.html</p>
-<mmrp-table api="api/subtypes"></mmrp-table>
+<h1>Types</h1>
+<table class='bordered'>
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Edit</th>
+  </thead>
+  <tbody>
+    <tr ng-repeat="subtype in data.subtypes">
+      <td>{{subtype.id}}</td>
+      <td>
+        <span editable-text="subtype.name" e-name="name" e-form="rowform">{{subtype.name||"name"}}</span>
+      </td>
+      <td>
+        <mmrp-edit></mmrp-edit>
+        <form editable-form name="rowform" ng-show="rowform.$visible">
+          <mmrp-save></mmrp-save>
+          <mmrp-cancel></mmrp-cancel>
+          <mmrp-trash ng-click="remove(subtype.id)"></mmrp-trash>
+        </form>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="">
+    <td></td>
+    <td><span editable-text="new.name" e-name="name" e-form="newform">{{new.name}}</span></td>
+    <td>
+      <mmrp-add></mmrp-add>
+      <form editable-form name="newform" ng-show="newform.$visible" onaftersave="add()">
+        <mmrp-save></mmrp-save>
+        <mmrp-cancel></mmrp-cancel>
+      </form>
+    </td>
+	</tfoot>
+</table>
+<!--
+<div class="error" ng-if="typeCtrl.errors">Controller Error: {{typeCtrl.errors}}</div>
+-->

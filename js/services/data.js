@@ -38,15 +38,13 @@ angular.module('MakerMRP')
     // err.status will contain the status code
   });
 
-	/*
   $http.get('api/subtypes').then(function(resp) {
-    this.subtypes = resp.data.data;
-    console.log('data: api/subtypes Success', this.subtypes);
+    data.subtypes = resp.data.data;
+    console.log('data: api/subtypes Success', data.subtypes);
   }, function(err) {
     console.error('data: api/subtypes ERR', err);
     // err.status will contain the status code
   });
-	*/
 
 	return data;
 }]);
