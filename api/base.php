@@ -13,13 +13,14 @@
 
 // Set the error reporting level
 error_reporting(E_ALL);
+ini_set("log_errors", 1);
 ini_set("display_errors", 1);
 
 // Start a PHP session
 session_start();
 
 // Include site constants
-include_once "constants.php";
+include_once "config.php";
 
 // Create a database object
 try {
