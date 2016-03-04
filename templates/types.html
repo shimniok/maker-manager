@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="type in DataService.types">
+    <tr ng-repeat="type in data.types">
       <td>{{type.id}}</td>
       <td>
         <span editable-text="type.name" e-name="name" e-form="rowform">{{type.name||"name"}}</span>

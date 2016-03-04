@@ -1,17 +1,17 @@
 angular.module('MakerMRP')
 
-    /* data service for shared data
-     *
-     */
-    .factory('data', ['$http', function ($http) {
+    //////////////////////////////////////////////////////////////////////
+    // Data service (data model)
+    //
+    .factory('DataService', function () {
         var data = {};
 
         data.products = [];
         data.parts = [];
         data.boms = [];
-        data.types = [];
         data.subtypes = [];
 
+        /*
         $http.get('api/parts').then(function (resp) {
             data.parts = resp.data.data;
             console.log('data: api/parts Success', data.parts);
@@ -32,7 +32,7 @@ angular.module('MakerMRP')
                 console.log("resp.data is a(n):", typeof resp.data);
                 console.log("resp.data.data is a(n):", typeof resp.data.data);
                 console.log('data: api/boms Success', data.boms);
-                console.log("data.boms is a(n):", typeof data.boms);
+                console.log("DataService.boms is a(n):", typeof data.boms);
 
                 // Now do our fancy data merge thingy
                 for (i in data.boms) {
@@ -67,6 +67,7 @@ angular.module('MakerMRP')
             console.error('data: api/subtypes ERR', err);
             // err.status will contain the status code
         });
+        */
 
         return data;
-    }]);
+    });

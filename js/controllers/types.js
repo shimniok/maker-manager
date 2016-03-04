@@ -2,9 +2,9 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // TYPE Controller
 //
-.controller('TypeController', function(data, $scope){
-  $scope.data = data;
-  $scope.new = [];
+.controller('TypeController', function(DataService, $scope){
+    $scope.data = DataService;
+    $scope.new = [];
 
   /*
   $scope.add = function(){

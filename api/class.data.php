@@ -242,7 +242,7 @@ class Data
             $stmt = $this->_db->prepare($this->_select);
             if ($stmt->execute()) {
                 while($row = $stmt->fetch()) {
-                    $rows[$row["id"]] = $row;
+                    array_push($rows, $row);
                 }
             } else {
                 $err = $stmt->errorInfo();
