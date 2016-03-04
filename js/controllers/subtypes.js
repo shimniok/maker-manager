@@ -2,8 +2,8 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // SUBYTPE Controller
 //
-.controller('SubtypeController', function(data, $scope) {
-  $scope.data = data;
+.controller('SubtypeController', function(DataService, $scope) {
+  $scope.data = DataService;
   $scope.newSubtype = {id: 0, name: ""};
 
   /*
