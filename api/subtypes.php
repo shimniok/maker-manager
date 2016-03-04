@@ -20,11 +20,11 @@ $columns = array('id', 'name');
 $db = new Data($db, 'subtypes', 'id', $columns);
 
 $app->get('/subtypes', function() use($db, $columns) {
-  return json_encode($db->load());
+  return json_encode($db->query());
 });
 
 $app->get('/subtypes/{id}', function (Silex\Application $app, $id) use ($db, $columns) {
-  return json_encode($db->loadRow('id', $id));
+  return json_encode($db->get('id', $id, 1));
 });
 
 $app->run();

@@ -229,11 +229,11 @@ class Data
 	}
 
     /**
-     * Loads all parts
+     * Queries and returns all rows
      *
      * @return all columns, all rows
      */
-    public function load()
+    public function query()
     {
 		$this->_message = '';
 
@@ -259,60 +259,29 @@ class Data
 
 
     /**
-     * Loads the first matching row
+     * Queries and returns the first n matching rows
      *
      * @param $col is the column name for where clause
      * @param $val is the value for where clause
+     * @paran $n is the number of matches to return (default: 0, return all)
      * @return an array of database rows as assoc. arrays (col => value)
      */
-    public function loadRow($col, $val)
+    public function get($col, $val, $n=0)
     {
 		$this->_message = '';
-		$row = array();
-		try {
-    	    $stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
-            $stmt->bindParam(":val", $val, PDO::PARAM_STR);
-            if ($stmt->execute()) {
-				$row = $stmt->fetch(PDO::FETCH_ASSOC);	// do this once
-			} else {
-				$err = $stmt->errorInfo();
-				$msg = "loadRow(): ".$err[0]." ".$err[1]." ".$err[2];
-				$this->writeLog($msg);
-			}
-            $stmt->closeCursor();
-        } catch(PDOException $e) {
-		    $this->_message = $e->getMessage();
-            $this->writeLog($e->getMessage());
-        }
-        return $row;
-	}
-
-
-	/**
-     * Loads all matching rows
-     *
-     * @param $col is the column name for where clause
-     * @param $val is the value for where clause
-     * @return an array of database rows as arrays
-     */
-    public function loadList($col, $val)
-    {
-		// IMPROVE INPUT VALIDATION HERE
-
-		$this->_message = '';
-
 		$rows = array();
 
  		try {
         	$stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
             $stmt->bindValue(":val", $val, PDO::PARAM_STR);
             if ($stmt->execute()) {
+                $row_count = 0;
 				while($row = $stmt->fetch()) {
-					$arr = array();
-					foreach ($this->_columns as $c) {
-						$arr[$c] = $row[$c];
+					array_push($rows, $row);
+					$row_count++;
+					if ($n && $row_count >= $n) {
+					    break;
 					}
-					$rows[ $row[$this->_pkey] ] = $arr;
 				}
 			} else {
 				$err = $stmt->errorInfo();

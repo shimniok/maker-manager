@@ -19,11 +19,11 @@ $columns = array('id', 'inventory', 'needed', 'name');
 $db = new Data($db, 'products', 'id', $columns);
 
 $app->get('/products', function() use($db, $columns) {
-  return json_encode($db->load());
+  return json_encode($db->query());
 });
 
 $app->get('/products/{id}', function (Silex\Application $app, $id) use ($db, $columns) {
-  return json_encode($db->loadRow('id', $id));
+  return json_encode($db->get('id', $id, 1));
 });
 
 $app->run();

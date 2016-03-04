@@ -29,16 +29,15 @@ $columns = array('id', 'name');
 $db = new Data($db, 'types', 'id', $columns);
 
 $app->get('/types', function() use($db, $columns) {
-  return json_encode($db->load());
+  return json_encode($db->query());
 });
 
 $app->get('/types/{id}', function($id) use ($db, $columns) {
-  return json_encode($db->loadRow('id', $id));
+  return json_encode($db->get('id', $id, 1));
 });
 
 $app->post('/types', function(Silex\Application $app, Symfony\Component\HttpFoundation\Request $request) use($db) {
   $data = $request->request->all();
-  var_dump($data);
   $id = $db->add($data);
   $data['id'] = "$id";
   return json_encode($data);
