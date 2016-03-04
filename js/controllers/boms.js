@@ -3,8 +3,8 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // PART Controller
 //
-.controller('BomController', function(data, $scope, $stateParams){
-  $scope.data = data;
+.controller('BomController', function(DataService, $scope, $stateParams){
+  $scope.data = DataService;
   $scope.id = $stateParams.id;
   $scope.bom = [];
 

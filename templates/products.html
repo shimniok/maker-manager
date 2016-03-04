@@ -13,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="product in DataService.products">
+      <tr ng-repeat="product in data.products">
         <td>{{product.id}}</td>
         <td>
           <span editable-text="product.needed" e-name="needed" e-form="rowform">{{ product.needed || "0" }}</span>

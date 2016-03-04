@@ -27,7 +27,6 @@ angular.module('MakerMRP', ['ngResource', 'ui.router', 'xeditable'])
         controller: "TypeController"
       })
       .state('subtypes', {
-        url: "/subtypes",
         templateUrl: "templates/subtypes.html",
         controller: "SubtypeController"
       });
@@ -45,10 +44,19 @@ angular.module('MakerMRP', ['ngResource', 'ui.router', 'xeditable'])
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
   }])
 
-  .run(function(editableOptions, DataService, TypesResource, SubtypesResource) {
+  .run(function(editableOptions, DataService, ProductsResource, PartsResource, BomsResource, TypesResource, SubtypesResource) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
 
     // Pre-load the data
+    DataService.products = ProductsResource.query(function() {
+      console.log(DataService.products);
+    });
+    DataService.parts = PartsResource.query(function() {
+      console.log(DataService.parts);
+    });
+    DataService.boms = BomsResource.query(function () {
+      console.log(DataService.boms);
+    });
     DataService.types = TypesResource.query(function() {
       console.log(DataService.types);
     });
