@@ -1,12 +1,14 @@
 <h1>Types</h1>
 <table class='bordered'>
   <thead>
-    <th>ID</th>
-    <th>Name</th>
-    <th>Edit</th>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Edit</th>
+    </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="type in data.types">
+    <tr ng-repeat="type in DataService.types">
       <td>{{type.id}}</td>
       <td>
         <span editable-text="type.name" e-name="name" e-form="rowform">{{type.name||"name"}}</span>
@@ -22,16 +24,18 @@
     </tr>
   </tbody>
   <tfoot class="">
-    <td></td>
-    <td><span editable-text="new.name" e-name="name" e-form="newform">{{new.name}}</span></td>
-    <td>
-      <mmrp-add></mmrp-add>
-      <form editable-form name="newform" ng-show="newform.$visible" onaftersave="add()">
-        <mmrp-save></mmrp-save>
-        <mmrp-cancel></mmrp-cancel>
-      </form>
-    </td>
-	</tfoot>
+    <tr>
+      <td></td>
+      <td><span editable-text="new.name" e-name="name" e-form="newform">{{new.name}}</span></td>
+      <td>
+        <mmrp-add></mmrp-add>
+        <form editable-form name="newform" ng-show="newform.$visible" onaftersave="add()">
+          <mmrp-save></mmrp-save>
+          <mmrp-cancel></mmrp-cancel>
+        </form>
+      </td>
+    </tr>
+  </tfoot>
 </table>
 <!--
 <div class="error" ng-if="typeCtrl.errors">Controller Error: {{typeCtrl.errors}}</div>

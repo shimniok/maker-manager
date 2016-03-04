@@ -3,58 +3,62 @@
   <div class="column">
     <h1>Products</h1>
     <table class="bordered" id="products">
-      <thead>
+    <thead>
+      <tr>
         <th>ID</th>
         <th>Need</th>
         <th>Inv</th>
         <th>Name</th>
         <th class='edit'>Edit</th>
-      </thead>
-      <tbody>
-        <tr ng-repeat="product in data.products">
-          <td>{{product.id}}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="product in DataService.products">
+        <td>{{product.id}}</td>
+        <td>
+          <span editable-text="product.needed" e-name="needed" e-form="rowform">{{ product.needed || "0" }}</span>
+        </td>
+        <td>
+          <span editable-text="product.inventory" e-name="inventory" e-form="rowform">{{product.inventory || "0" }}</span>
+        </td>
+        <td>
+          <span editable-text="product.name" e-name="name" e-form="rowform">{{ product.name || "name" }}</span>
+        </td>
+        <td>
+          <a ui-sref="products.bom({id: product.id})">
+            <button class="btn btn-xs btn-default pull-right" ng-show="!rowform.$visible">
+              <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            </button>
+          </a>
+          <mmrp-edit></mmrp-edit>
+          <form editable-form name="rowform" ng-show="rowform.$visible">
+            <mmrp-save></mmrp-save>
+            <mmrp-cancel></mmrp-cancel>
+            <mmrp-trash></mmrp-trash>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
           <td>
-            <span editable-text="product.needed" e-name="needed" e-form="rowform">{{ product.needed || "0" }}</span>
+            <span editable-text="new.needed" e-name="needed" e-form="newform"></span>
           </td>
           <td>
-            <span editable-text="product.inventory" e-name="inventory" e-form="rowform">{{product.inventory || "0" }}</span>
+            <span editable-text="new.inventory" e-name="inventory" e-form="newform"></span>
           </td>
           <td>
-            <span editable-text="product.name" e-name="name" e-form="rowform">{{ product.name || "name" }}</span>
+            <span editable-text="new.name" e-name="name" e-form="newform"></span>
           </td>
           <td>
-            <a ui-sref="products.bom({id: product.id})">
-              <button class="btn btn-xs btn-default pull-right" ng-show="!rowform.$visible">
-                <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-              </button>
-            </a>
-            <mmrp-edit></mmrp-edit>
-            <form editable-form name="rowform" ng-show="rowform.$visible">
+            <mmrp-add></mmrp-add>
+            <form editable-form name="newform" ng-show="newform.$visible">
               <mmrp-save></mmrp-save>
               <mmrp-cancel></mmrp-cancel>
-              <mmrp-trash></mmrp-trash>
             </form>
           </td>
         </tr>
-    	</tbody>
-      <tfoot>
-        <td></td>
-        <td>
-          <span editable-text="new.needed" e-name="needed" e-form="newform"></span>
-        </td>
-        <td>
-          <span editable-text="new.inventory" e-name="inventory" e-form="newform"></span>
-        </td>
-        <td>
-          <span editable-text="new.name" e-name="name" e-form="newform"></span>
-        </td>
-        <td>
-          <mmrp-add></mmrp-add>
-          <form editable-form name="newform" ng-show="newform.$visible">
-            <mmrp-save></mmrp-save>
-            <mmrp-cancel></mmrp-cancel>
-          </form>
-        </td>
       </tfoot>
     </table>
   </div>

@@ -1,20 +1,22 @@
 <h1>Parts</h1>
 <table class="bordered" id="parts">
   <thead>
-    <th>ID</th>
-    <th>Inv</th>
-    <th>Ord</th>
-    <th>PartNo</th>
-    <th>Footprint</th>
-    <th>Value</th>
-    <th>Voltage</th>
-    <th>Tolerance</th>
-    <th>Type</th>
-    <th>Subtype</th>
-    <th class="edit">Edit</th>
+    <tr>
+      <th>ID</th>
+      <th>Inv</th>
+      <th>Ord</th>
+      <th>PartNo</th>
+      <th>Footprint</th>
+      <th>Value</th>
+      <th>Voltage</th>
+      <th>Tolerance</th>
+      <th>Type</th>
+      <th>Subtype</th>
+      <th class="edit">Edit</th>
+    </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="part in data.parts">
+    <tr ng-repeat="part in DataService.parts">
       <td>{{part.id}}</span>
       </td>
       <td>
@@ -40,12 +42,12 @@
       </td>
       <td>
         <span editable-select="part.types_id" e-name="type" e-ng-options="t.id as t.name for t in types" e-form="rowform">
-          {{ data.types[part.types_id].name }}
+          {{ DataService.types[part.types_id].name }}
         </span>
       </td>
       <td>
         <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="rowform">
-          {{ data.subtypes[part.subtypes_id].name }}
+          {{ DataService.subtypes[part.subtypes_id].name }}
         </span>
       </td>
       <td>
@@ -59,40 +61,42 @@
     </tr>
   </tbody>
   <tfoot>
-    <td></td>
-    <td>
-      <span editable-text="part.inventory" e-name="inventory" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-text="part.ordered" e-name="ordered" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-text="part.partNo" e-name="partNo" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-text="part.footprint" e-name="footprint" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-text="part.value" e-name="value" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-text="part.voltage" e-name="voltage" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-text="part.tolerance" e-name="tolerance" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-select="part.types_id" e-name="type" e-ng-options="t.id as t.name for t in types" e-form="newform"></span>
-    </td>
-    <td>
-      <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="newform"></span>
-    </td>
-    <td>
-      <mmrp-add></mmrp-add>
-      <form editable-form name="newform" ng-show="newform.$visible">
-        <mmrp-save></mmrp-save>
-        <mmrp-cancel></mmrp-cancel>
-      </form>
-    </td>
+    <tr>
+      <td></td>
+      <td>
+        <span editable-text="part.inventory" e-name="inventory" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-text="part.ordered" e-name="ordered" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-text="part.partNo" e-name="partNo" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-text="part.footprint" e-name="footprint" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-text="part.value" e-name="value" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-text="part.voltage" e-name="voltage" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-text="part.tolerance" e-name="tolerance" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-select="part.types_id" e-name="type" e-ng-options="t.id as t.name for t in types" e-form="newform"></span>
+      </td>
+      <td>
+        <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="newform"></span>
+      </td>
+      <td>
+        <mmrp-add></mmrp-add>
+        <form editable-form name="newform" ng-show="newform.$visible">
+          <mmrp-save></mmrp-save>
+          <mmrp-cancel></mmrp-cancel>
+        </form>
+      </td>
+    </tr>
   </tfoot>
 </table>

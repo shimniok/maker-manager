@@ -1,32 +1,34 @@
-<h1>{{product.name}}</h1>
+<h1>{{data.products[id].name}}</h1>
 <table class="bordered">
   <thead>
-    <th>ID</th>
-    <th>Inv</th>
-    <th>Ord</th>
-    <th>Qty</th>
-    <th>PartNo</th>
-    <th>Footprint</th>
-    <th>Value</th>
-    <th>Voltage</th>
-    <th>Tolerance</th>
-    <th>Type</th>
-    <th>Subtype</th>
-    <th class="Edit">Edit</th>
+    <tr>
+      <th>ID</th>
+      <th>Inv</th>
+      <th>Ord</th>
+      <th>Qty</th>
+      <th>PartNo</th>
+      <th>Footprint</th>
+      <th>Value</th>
+      <th>Voltage</th>
+      <th>Tolerance</th>
+      <th>Type</th>
+      <th>Subtype</th>
+      <th class="Edit">Edit</th>
+    </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="item in bom">
+    <tr ng-repeat="item in products">
       <td>{{item.id}}</td>
-      <td>{{parts[item.parts_id].inventory}}</td>
-      <td>{{parts[item.parts_id].ordered}}</td>
+      <td>{{data.parts[item.parts_id].inventory}}</td>
+      <td>{{data.parts[item.parts_id].ordered}}</td>
       <td>{{item.qty}}</td>
-      <td>{{parts[item.parts_id].partNo}}</td>
-      <td>{{parts[item.parts_id].footprint}}</td>
-      <td>{{parts[item.parts_id].value}}</td>
-      <td>{{parts[item.parts_id].voltage}}</td>
-      <td>{{parts[item.parts_id].tolerance}}</td>
-      <td>{{types[parts[item.parts_id].types_id].name}}</td>
-      <td>{{subtypes[parts[item.parts_id].subtypes_id].name}}</td>
+      <td>{{data.parts[item.parts_id].partNo}}</td>
+      <td>{{data.parts[item.parts_id].footprint}}</td>
+      <td>{{data.parts[item.parts_id].value}}</td>
+      <td>{{data.parts[item.parts_id].voltage}}</td>
+      <td>{{data.parts[item.parts_id].tolerance}}</td>
+      <td>{{data.types[data.parts[item.parts_id].types_id].name}}</td>
+      <td>{{data.subtypes[data.parts[item.parts_id].subtypes_id].name}}</td>
       <td></td>
     </tr>
 	</tbody>
