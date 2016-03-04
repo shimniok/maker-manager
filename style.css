@@ -35,7 +35,7 @@ input[type='button'], input[type='submit'] {
 }
 
 input.sold {
-	background: url('images/icons.png') no-repeat -352px 0px;
+	background: url('images/icons.png') no-repeat -352px 0;
 }
 input.sold:hover {
 	background: url('images/icons.png') no-repeat -352px -23px;
@@ -44,10 +44,10 @@ input.sold:hover {
 /*** editing ***/
 
 input.add {
-	background: url('images/icons.png') no-repeat 0px 0px;
+	background: url('images/icons.png') no-repeat 0 0;
 }
 input.add:hover {
-	background: url('images/icons.png') no-repeat 0px -23px;
+	background: url('images/icons.png') no-repeat 0 -23px;
 }
 
 /*
@@ -69,21 +69,21 @@ input.delete:hover {
 
 input.edit {
 	float: right;
-	background: url('images/icons.png') no-repeat -88px 0px;
+	background: url('images/icons.png') no-repeat -88px 0;
 }
 input.edit:hover {
 	background: url('images/icons.png') no-repeat -88px -23px;
 }
 
 input.save {
-	background: url('images/icons.png') no-repeat -44px 0px;
+	background: url('images/icons.png') no-repeat -44px 0;
 }
 input.save:hover {
 	background: url('images/icons.png') no-repeat -44px -23px;
 }
 
 input.cancel {
-	background: url('images/icons.png') no-repeat -66px 0px;
+	background: url('images/icons.png') no-repeat -66px 0;
 }
 input.cancel:hover {
 	background: url('images/icons.png') no-repeat -66px -23px;
@@ -94,14 +94,14 @@ input.bom {
 }
 
 input.ordered, input.needed {
-	background: url('images/icons.png') no-repeat 0px 0px;
+	background: url('images/icons.png') no-repeat 0 0;
 }
 input.ordered:hover, input.needed:hover, input.add:hover, input.bom-add:hover {
-	background: url('images/icons.png') no-repeat 0px -23px;
+	background: url('images/icons.png') no-repeat 0 -23px;
 }
 
 input.received, input.built {
-	background: url('images/icons.png') no-repeat -264px 0px;
+	background: url('images/icons.png') no-repeat -264px 0;
 }
 input.received:hover, input.built:hover {
 	background: url('images/icons.png') no-repeat -264px -23px;

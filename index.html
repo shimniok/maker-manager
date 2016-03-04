@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" ng-app="MakerMRP">
+<!--suppress HtmlUnknownBooleanAttribute, HtmlUnknownBooleanAttribute -->
+<html xmlns:test="http://www.w3.org/1999/xhtml" ng-app="MakerMRP">
 <head>
   <!-- MakerMRP Main Template -->
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -8,47 +9,36 @@
   <script src="js/angular-route.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/services/data.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/resources/types.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/controllers/tabs.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/controllers/product.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/controllers/bom.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/controllers/part.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/controllers/type.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/controllers/subtype.js" type="text/javascript" charset="utf-8"></script>
-  <script src="js/directives/mmrp-add.js" type="text/javascript" charset="utf-8"></<script></script>
-  <script src="js/directives/mmrp-edit.js" type="text/javascript" charset="utf-8"></<script></script>
-  <script src="js/directives/mmrp-save.js" type="text/javascript" charset="utf-8"></<script></script>
-  <script src="js/directives/mmrp-cancel.js" type="text/javascript" charset="utf-8"></<script></script>
-  <script src="js/directives/mmrp-trash.js" type="text/javascript" charset="utf-8"></<script></script>
-  <script src="js/directives/show-on-hover.js" type="text/javascript" charset="utf-8"></<script></script>
-
+  <script src="js/controllers/products.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/controllers/boms.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/controllers/parts.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/controllers/types.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/controllers/subtypes.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/directives/mmrp-add.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/directives/mmrp-edit.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/directives/mmrp-save.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/directives/mmrp-cancel.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/directives/mmrp-trash.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/directives/show-on-hover.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/angular-resource.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/angular-ui-router.min.js" type="text/javascript" charset="utf-8"></script>
-
-  <link href="css/xeditable.css" rel="stylesheet">
-  <script src="js/xeditable.js"></script>
-
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-
+  <script src="js/xeditable.js" type="text/javascript" charset="utf-8"></script>
+  <link href="css/xeditable.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
   <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
 
 <body ng-app="MakerMRP">
 
   <ul class="nav nav-tabs" ng-controller="TabController">
-    <li role="presentation" ui-sref-active="active" ng-repeat="tab in tabs">
+    <li ui-sref-active="active" ng-repeat="tab in tabs" role="presentation">
       <a ui-sref="{{tab.link}}">{{tab.label}}</a>
     </li>
   </ul>
 
-
-
   <div ui-view>
-
-    <!--
-  <ul class="nav nav-tabs" ng-controller="TabsController">
-    <li ng-class="tabClass(tab)" ng-repeat="tab in tabs" tab="tab">
-      <a ui-sref="{{tab.link}}" ng-click="setSelectedTab(tab)">{{tab.label}}</a>
-    </li>
-  </ul>-->
 
   </div>
 </body>
