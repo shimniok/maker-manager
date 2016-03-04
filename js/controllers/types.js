@@ -7,16 +7,6 @@ angular.module('MakerMRP')
   $scope.new = [];
 
   /*
-  $http.get('api/types').then(function(resp){
-    console.log('Success', resp);
-    // For JSON responses, response.data contains the result
-    $scope.types = resp.data.data;
-    console.log('Success', $scope.types);
-  }, function(err) {
-    console.error('Error', err.status);
-    // err.status will contain the status code
-  });
-
   $scope.add = function(){
     console.log('add(): ', JSON.stringify($scope.new));
     $http.post('api/types', JSON.stringify($scope.new)).then(function(resp){

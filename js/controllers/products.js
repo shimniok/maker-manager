@@ -2,7 +2,7 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // PRODUCT Controller
 //
-.controller('ProductController', function(data, $scope, $http, $location){
+.controller('ProductController', function(data, $scope){
   $scope.data = data;
 
   /*

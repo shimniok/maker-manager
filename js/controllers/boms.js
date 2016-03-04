@@ -3,8 +3,12 @@ angular.module('MakerMRP')
 //////////////////////////////////////////////////////////////////////
 // PART Controller
 //
-.controller('BomController', function($scope, $stateParams, $http){
+.controller('BomController', function(data, $scope, $stateParams){
+  $scope.data = data;
+  $scope.id = $stateParams.id;
+  $scope.bom = [];
 
+  /*
   $http.get('api/bom/'+$stateParams.id).then(function(resp){
     console.log('products.bom(id): api/bom Success', resp);
     $scope.bom = resp.data.data;
@@ -46,4 +50,5 @@ angular.module('MakerMRP')
     console.error('ERR', err);
     // err.status will contain the status code
   });
+  */
 });
