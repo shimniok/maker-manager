@@ -13,7 +13,7 @@
  */
 class Data
 {
-	/**
+    /**
 	 * The database object
 	 *
 	 * @var object
@@ -66,7 +66,7 @@ class Data
 	/**
 	 * Writes to error log with common format
 	 *
-	 * @msg - single line message, don't include \n
+	 * @param string $msg - single line message, don't include \n
 	 */
 	public function writeLog($msg)
 	{
@@ -75,7 +75,9 @@ class Data
 	}
 
 	/**
-	 * returns the last error message, if any
+	 * get the last error message, if any
+	 *
+	 * @return string, the most recent error message
 	 */
 	public function getMessage()
 	{
@@ -83,69 +85,70 @@ class Data
 	}
 
 	/**
-	 * Adds data to the table, returns id
+	 * Adds a single row to the table
+	 *
+	 * @param assoc array $data the row data to be added with column => value pairs
+	 * @return id if successful, -1 if failed
 	 */
 	public function add($data)
 	{
-		// IMPROVE INPUT VALIDATION HERE
-
 		$this->_message = '';
 		$status = -1;
 
-    try {
-			// Construct UPDATE SQL statement
-			$newData = array();	// make a new array of valid columns and values
-			$cols = array(); 	// list of columns for INSERT
-			$values = array();  // list of parameterized values for INSERT
+        try {
+            // Construct UPDATE SQL statement
+            $newData = array();	// make a new array of valid columns and values
+            $cols = array(); 	// list of columns for INSERT
+            $values = array();  // list of parameterized values for INSERT
 
-			foreach ($data as $col => $value) {
-				if (in_array($col, $this->_columns)) { // key is valid column
-					$cols[] = "$col";
-					$values[] = ":$col";
-					$newData[$col] = $value;
-				}
-			}
+            foreach ($data as $col => $value) {
+                if (in_array($col, $this->_columns)) { // key is valid column
+                    $cols[] = "$col";
+                    $values[] = ":$col";
+                    $newData[$col] = $value;
+                }
+            }
 
-      $this->_insert = "INSERT INTO ".$this->_table." (".
-			implode(', ', $cols).') VALUES ('.
-			implode(', ', $values).')';
+            $this->_insert = "INSERT INTO ".$this->_table." (".
+                implode(', ', $cols).') VALUES ('.
+                implode(', ', $values).')';
 
-      $stmt = $this->_db->prepare($this->_insert);
+            $stmt = $this->_db->prepare($this->_insert);
 
-			$msg = "add(): ".$this->_insert;
+            $msg = "add(): ".$this->_insert;
 
-			// BIND A LIST OF PARAMETERS
-    	foreach ($newData as $col => $value) {
-	      $stmt->bindValue(":$col", $value); // TODO: what to do about param type? PDO::PARAM_STR
-	      $msg .= " :$col=$value";
-			}
+            // BIND A LIST OF PARAMETERS
+            foreach ($newData as $col => $value) {
+                $stmt->bindValue(":$col", $value); // TODO: what to do about param type? PDO::PARAM_STR
+                $msg .= " :$col=$value";
+            }
 
-			if ($stmt->execute()) {
-				$status = $this->_db->lastInsertId();
-			} else {
-				$err = $stmt->errorInfo();
-				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];
-				$status = -1;
-			}
-			$this->writeLog($msg);
-        $stmt->closeCursor();
-    } catch(PDOException $e) {
-      $this->_message = $e->getMessage();
-      $this->writeLog($e->getMessage());
-      $status = -1;
-    }
-		return $status;
+            if ($stmt->execute()) {
+                $status = $this->_db->lastInsertId();
+            } else {
+                $err = $stmt->errorInfo();
+                $msg .= " ".$err[0]." ".$err[1]." ".$err[2];
+                $status = -1;
+            }
+            $this->writeLog($msg);
+            $stmt->closeCursor();
+        } catch(PDOException $e) {
+          $this->_message = $e->getMessage();
+          $this->writeLog($e->getMessage());
+          $status = -1;
+        }
+	    return $status;
 	}
 
 	/**
-	 * Updates the database with the data specified
+	 * Updates a database row with the data specified
 	 *
-	 * @param id -- primary key of the record to update
-	 * @param data -- array of columns=>values to update
+	 * @param int id primary key of the row to update
+	 * @param assoc array $data col => value pairs to update in the table row
+	 * @return 1 if successful, 0 if not
 	 */
 	public function update($id, $data)
 	{
-		// IMPROVE INPUT VALIDATION HERE
 		$this->_message = '';
 		$status = 0;
 
@@ -165,34 +168,36 @@ class Data
 		$msg = "update(): ".$this->_update;
 
 		try {
-  		$stmt = $this->_db->prepare($this->_update);
-			// BIND A LIST OF PARAMETERS
-      $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
-      foreach ($newData as $col => $value) {
-				$stmt->bindValue(":$col", $value); // TODO: what to do about param type?
-				$msg .= " :$col=$value";
-			}
-      if ($stmt->execute()) {
-				$status = 1;
-			} else {
-				$err = $stmt->errorInfo();
-				$msg .= " ".$err[0]." ".$err[1]." ".$err[2];
-			}
-			$this->writeLog($msg);
-			$stmt->closeCursor();
-  	} catch(PDOException $e) {
-			$this->_message = $e->getMessage();
-    	$this->writeLog($e->getMessage());
-  	}
-  	return $status;
+            $stmt = $this->_db->prepare($this->_update);
+            // BIND A LIST OF PARAMETERS
+            $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
+            foreach ($newData as $col => $value) {
+                $stmt->bindValue(":$col", $value); // TODO: what to do about param type?
+                $msg .= " :$col=$value";
+            }
+            if ($stmt->execute()) {
+                $status = 1;
+            } else {
+                $err = $stmt->errorInfo();
+                $msg .= " ".$err[0]." ".$err[1]." ".$err[2];
+            }
+            $this->writeLog($msg);
+            $stmt->closeCursor();
+        } catch(PDOException $e) {
+            $this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
+        }
+        return $status;
 	}
 
 	/**
-	 * Deletes the specified entry
+	 * Deletes the specified row
+	 *
+	 * @param int $id primary key of the row to delete
+	 * @return 0 if successful, -1 if not
 	 */
 	public function del($id)
 	{
-		// IMPROVE INPUT VALIDATION HERE
 		$this->_message = '';
 		$status = 0;
 
@@ -200,9 +205,9 @@ class Data
 			// DELETE SQL statement
 			$this->_delete = "DELETE FROM ".$this->_table." WHERE ".$this->_pkey."=:".$this->_pkey;
 
-      $stmt = $this->_db->prepare($this->_delete);
-			// BIND A LIST OF PARAMETERS
-      $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
+            $stmt = $this->_db->prepare($this->_delete);
+            // BIND A LIST OF PARAMETERS
+            $stmt->bindParam(":".$this->_pkey, $id, PDO::PARAM_INT);
 
 			$msg = "del(): ".$this->_delete." id=".$id."\n";
 
@@ -214,75 +219,72 @@ class Data
 				$status = -1;
 			}
 			$this->writeLog($msg);
-      $stmt->closeCursor();
-    } catch(PDOException $e) {
+            $stmt->closeCursor();
+        } catch(PDOException $e) {
 			$this->_message = $e->getMessage();
-    	$this->writeLog($e->getMessage());
-      $status = -1;
-    }
-    return $status;
+    	    $this->writeLog($e->getMessage());
+            $status = -1;
+        }
+        return $status;
 	}
 
-  /**
-   * Loads all parts
-   *
-   * @return all columns, all rows
-   */
-  public function load()
-  {
-		// IMPROVE INPUT VALIDATION HERE
-
+    /**
+     * Loads all parts
+     *
+     * @return all columns, all rows
+     */
+    public function load()
+    {
 		$this->_message = '';
 
-		$rows = '';
+		$rows = array();
  		try {
-    	$stmt = $this->_db->prepare($this->_select);
-      if ($stmt->execute()) {
-				while($row = $stmt->fetch()) {
-					$rows[$row["id"]] = $row;
-				}
-			} else {
-				$err = $stmt->errorInfo();
-				$msg = "load(): ".$err[0]." ".$err[1]." ".$err[2];
-				$this->writeLog($msg);
-			}
-      $stmt->closeCursor();
-    } catch(PDOException $e) {
-			$this->_message = $e->getMessage();
-      $this->writeLog($e->getMessage());
-    }
-  	return array('columns' => $this->_columns, 'data' => $rows);
+            $stmt = $this->_db->prepare($this->_select);
+            if ($stmt->execute()) {
+                while($row = $stmt->fetch()) {
+                    $rows[$row["id"]] = $row;
+                }
+            } else {
+                $err = $stmt->errorInfo();
+                $msg = "load(): ".$err[0]." ".$err[1]." ".$err[2];
+                $this->writeLog($msg);
+            }
+            $stmt->closeCursor();
+        } catch(PDOException $e) {
+            $this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
+        }
+        return $rows;
 	}
 
 
-	/**
-   * Loads the first matching row
-   *
-   * @param $col is the column name for where clause
-   * @param $val is the value for where clause
-   * @return an array of database rows as arrays
-   */
-  public function loadRow($col, $val)
-  {
-		// IMPROVE INPUT VALIDATION HERE
+    /**
+     * Loads the first matching row
+     *
+     * @param $col is the column name for where clause
+     * @param $val is the value for where clause
+     * @return an array of database rows as assoc. arrays (col => value)
+     */
+    public function loadRow($col, $val)
+    {
 		$this->_message = '';
 		$row = array();
-			try {
-    	$stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
-      $stmt->bindParam(":val", $val, PDO::PARAM_STR);
-      if ($stmt->execute()) {
+		try {
+    	    $stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
+            $stmt->bindParam(":val", $val, PDO::PARAM_STR);
+            if ($stmt->execute()) {
 				$row = $stmt->fetch(PDO::FETCH_ASSOC);	// do this once
 			} else {
 				$err = $stmt->errorInfo();
 				$msg = "loadRow(): ".$err[0]." ".$err[1]." ".$err[2];
 				$this->writeLog($msg);
 			}
-      $stmt->closeCursor();
-    } catch(PDOException $e) {
-			$this->_message = $e->getMessage();
-      $this->writeLog($e->getMessage());
-    }
-    return $row;
+            $stmt->closeCursor();
+        } catch(PDOException $e) {
+		    $this->_message = $e->getMessage();
+            $this->writeLog($e->getMessage());
+        }
+        return $row;
 	}
 
 
@@ -299,7 +301,7 @@ class Data
 
 		$this->_message = '';
 
-		$entries = array();
+		$rows = array();
 
  		try {
         	$stmt = $this->_db->prepare("SELECT * FROM ".$this->_table." WHERE ".$col."=:val");
@@ -310,7 +312,7 @@ class Data
 					foreach ($this->_columns as $c) {
 						$arr[$c] = $row[$c];
 					}
-					$entries[ $row[$this->_pkey] ] = $arr;
+					$rows[ $row[$this->_pkey] ] = $arr;
 				}
 			} else {
 				$err = $stmt->errorInfo();
@@ -323,9 +325,15 @@ class Data
             $this->writeLog($e->getMessage());
         }
 
-        return  array('columns' => $this->_columns, 'data' => $entries);
+        return $rows;
     }
 
+   /**
+    * call a stored procedure
+    *
+    * @param string $fctn name of function to call
+    * @param array $params collection of parameters to pass to the call
+    */
     public function call($fctn, $params)
     {
 		$query = "CALL ".$fctn." (";
@@ -350,15 +358,6 @@ class Data
 			$err = $stmt->errorInfo();
             $this->writeLog($msg." ".$err[0]." ".$err[1]." ".$err[2]);
         }
-	}
-
-    // REVISE THIS
-    public function lookup($id)
-    {
-		if (isset($this->_name[$id]))
-			return $this->_name[$id];
-		else
-			return "";
 	}
 
 }
