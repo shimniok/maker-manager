@@ -17,8 +17,7 @@
   </thead>
   <tbody>
     <tr ng-repeat="part in data.parts">
-      <td>{{part.id}}</span>
-      </td>
+      <td>{{part.id}}</td>
       <td>
         <span editable-text="part.inventory" e-name="inventory" e-form="rowform">{{part.inventory}}</span>
       </td>
@@ -41,13 +40,14 @@
         <span editable-text="part.tolerance" e-name="tolerance" e-form="rowform">{{part.tolerance}}</span>
       </td>
       <td>
-        <span editable-select="part.types_id" e-name="type" e-ng-options="t.id as t.name for t in types" e-form="rowform">
-          {{ DataService.types[part.types_id].name }}
+        <span editable-select="part.types_id" e-name="type" e-ng-options="t.id as t.name for t in data.types" e-form="rowform">
+          {{ data.getTypeName(part.types_id) }}
         </span>
       </td>
       <td>
-        <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in subtypes" e-form="rowform">
-          {{ DataService.subtypes[part.subtypes_id].name }}
+        <span editable-select="part.subtypes_id" e-name="subtype" e-ng-options="t.id as t.name for t in data.subtypes"
+              e-form="rowform">
+          {{ data.getSubtypeName(part.subtypes_id) }}
         </span>
       </td>
       <td>
