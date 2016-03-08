@@ -33,7 +33,7 @@ $app->get('/types', function() use($db, $columns) {
 });
 
 $app->get('/types/{id}', function($id) use ($db, $columns) {
-  return json_encode($db->get('id', $id, 1));
+  return json_encode($db->query('id', $id, 1));
 });
 
 $app->post('/types', function(Silex\Application $app, Symfony\Component\HttpFoundation\Request $request) use($db) {
