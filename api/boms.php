@@ -23,7 +23,7 @@ $app->get('/boms', function() use($db, $columns) {
 });
 
 $app->get('/boms/{id}', function (Silex\Application $app, $id) use ($db, $columns) {
-  return json_encode($db->get('products_id', $id));
+  return json_encode($db->query('products_id', $id));
 });
 
 $app->run();
