@@ -14,11 +14,11 @@
         <span editable-text="type.name" e-name="name" e-form="rowform">{{type.name||"name"}}</span>
       </td>
       <td>
-        <mmrp-edit></mmrp-edit>
+        <mmrp-edit form="rowform"></mmrp-edit>
         <form editable-form name="rowform" ng-show="rowform.$visible">
-          <mmrp-save></mmrp-save>
-          <mmrp-cancel></mmrp-cancel>
-          <mmrp-trash ng-click="remove(type)"></mmrp-trash>
+          <mmrp-save form="rowform"></mmrp-save>
+          <mmrp-cancel form="rowform"></mmrp-cancel>
+          <mmrp-trash remove="remove()"></mmrp-trash>
         </form>
       </td>
     </tr>
@@ -28,10 +28,10 @@
       <td></td>
       <td><span editable-text="new.name" e-name="name" e-form="newform">{{new.name}}</span></td>
       <td>
-        <mmrp-add></mmrp-add>
+        <mmrp-add form="newform"></mmrp-add>
         <form editable-form name="newform" ng-show="newform.$visible" onaftersave="add()">
-          <mmrp-save></mmrp-save>
-          <mmrp-cancel></mmrp-cancel>
+          <mmrp-save form="newform"></mmrp-save>
+          <mmrp-cancel form="newform"></mmrp-cancel>
         </form>
       </td>
     </tr>
