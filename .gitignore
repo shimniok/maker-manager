@@ -4,3 +4,4 @@ config.php
 *.js.map
 .idea/*
 api/nbproject/*
+/nbproject/private/
