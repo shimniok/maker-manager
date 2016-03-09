@@ -1,38 +1,42 @@
 angular.module('MakerMRP')
-//////////////////////////////////////////////////////////////////////
-// TYPE Controller
-//
-.controller('TypeController', function(DataService, $scope){
+  //////////////////////////////////////////////////////////////////////
+  // TYPE Controller
+  //
+  .controller('TypeController', function (DataService, TypesResource, $scope) {
     $scope.data = DataService;
-    $scope.new = [];
+    $scope.new = new TypesResource();
 
-  /*
-  $scope.add = function(){
-    console.log('add(): ', JSON.stringify($scope.new));
-    $http.post('api/types', JSON.stringify($scope.new)).then(function(resp){
-      console.log('Success', resp.data);
-      var id = resp.data.id;
-      $scope.types[id] = { name: resp.data.name, id: resp.data.id };
-      $scope.new = {};
-    });
-  };
+    /**
+     * Add the new Type to the data model
+     * Depends on $scope.new
+     */
 
-  $scope.remove = function(id){
-    console.log('delete(): ', id, $scope.types[id]);
-    $http.delete('api/types/'+id).then(function(resp){
-      console.log('Success', resp.data);
-      delete $scope.types[id];
-    });
-  };
+    $scope.add = function() {
+      console.log("TypeController.add()");
+      $scope.new.$save(function(type) {
+        DataService.types.push(type);
+        $scope.new = new TypesResource();
+        console.log("TypeController.add()", type);
+      });
+    };
 
-  $scope.save = function(type){
-    console.log('save(): ', type);
-    $http.put('api/types/'+type.id, type ).then(function(resp){
-      console.log('Success', resp.data);
-      $scope.types[type.id] = type;
-      $scope.editing = null;
-    });
-  };
-  */
+    /*
+     $scope.remove = function(id){
+     console.log('delete(): ', id, $scope.types[id]);
+     $http.delete('api/types/'+id).then(function(resp){
+     console.log('Success', resp.data);
+     delete $scope.types[id];
+     });
+     };
 
-});
+     $scope.save = function(type){
+     console.log('save(): ', type);
+     $http.put('api/types/'+type.id, type ).then(function(resp){
+     console.log('Success', resp.data);
+     $scope.types[type.id] = type;
+     $scope.editing = null;
+     });
+     };
+     */
+
+  });
