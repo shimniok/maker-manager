@@ -34,14 +34,14 @@ class Data {
     /**
      * Checks for a database object and creates one if none is found
      *
-     * @param object $db		-- database
-     * @param string $table		-- table name
-     * @param string $pkey		-- primary key column name
-     * @param array $columns	-- list of columns, put in order of desired order
+     * @param object $db is the PDO database object
+     * @param string $table is the table name
+     * @param string $pkey is the primary key column name
+     * @param array $columns is a list of columns
      *
      * @return void
      */   
-    public function __construct($db = NULL, $table, $pkey, $columns) {
+    public function __construct($db, $table, $pkey, $columns) {
         if (is_object($db)) {
             $this->_db = $db;
         } else {
@@ -129,6 +129,8 @@ class Data {
         if ($this->_error != '') {
             $this->writeLog($this->_error);
         }
+        
+        $new["status"] = $this->_error;
         
         return $new;
     }
@@ -269,9 +271,9 @@ class Data {
             $this->writeLog($this->_error);
         }
         
+        // TODO: return error status in rows?
         return $rows;
     }
 
 }
 
-?>
