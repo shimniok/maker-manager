@@ -29,6 +29,8 @@ class Data {
     protected $_error;   // last error message
     protected $_status;  // error status
 
+    // TODO: Make methods smaller  
+
     /**
      * Checks for a database object and creates one if none is found
      *
@@ -38,8 +40,7 @@ class Data {
      * @param array $columns	-- list of columns, put in order of desired order
      *
      * @return void
-     */
-
+     */   
     public function __construct($db = NULL, $table, $pkey, $columns) {
         if (is_object($db)) {
             $this->_db = $db;
@@ -126,7 +127,7 @@ class Data {
         }
         
         if ($this->_error != '') {
-            $this->writeLog($_error);
+            $this->writeLog($this->_error);
         }
         
         return $new;
