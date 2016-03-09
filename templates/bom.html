@@ -1,11 +1,11 @@
-<h1>{{data.products[id].name}}</h1>
+<h1>{{data.currentProduct.name}}</h1>
 <table class="bordered">
   <thead>
     <tr>
       <th>ID</th>
+      <th>Qty</th>
       <th>Inv</th>
       <th>Ord</th>
-      <th>Qty</th>
       <th>PartNo</th>
       <th>Footprint</th>
       <th>Value</th>
@@ -17,18 +17,18 @@
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="item in products">
+    <tr ng-repeat="item in data.currentBom">
       <td>{{item.id}}</td>
-      <td>{{data.parts[item.parts_id].inventory}}</td>
-      <td>{{data.parts[item.parts_id].ordered}}</td>
       <td>{{item.qty}}</td>
-      <td>{{data.parts[item.parts_id].partNo}}</td>
-      <td>{{data.parts[item.parts_id].footprint}}</td>
-      <td>{{data.parts[item.parts_id].value}}</td>
-      <td>{{data.parts[item.parts_id].voltage}}</td>
-      <td>{{data.parts[item.parts_id].tolerance}}</td>
-      <td>{{data.types[data.parts[item.parts_id].types_id].name}}</td>
-      <td>{{data.subtypes[data.parts[item.parts_id].subtypes_id].name}}</td>
+      <td>{{item.part.inventory}}</td>
+      <td>{{item.part.ordered}}</td>
+      <td>{{item.part.partNo}}</td>
+      <td>{{item.part.footprint}}</td>
+      <td>{{item.part.value}}</td>
+      <td>{{item.part.voltage}}</td>
+      <td>{{item.part.tolerance}}</td>
+      <td>{{item.part.types_id}}</td>
+      <td>{{item.part.subtypes_id}}</td>
       <td></td>
     </tr>
 	</tbody>

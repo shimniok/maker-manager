@@ -44,23 +44,6 @@ angular.module('MakerMRP', ['ngResource', 'ui.router', 'xeditable'])
     $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
   }])
 
-  .run(function(editableOptions, DataService, ProductsResource, PartsResource, BomsResource, TypesResource, SubtypesResource) {
+  .run(function($state, editableOptions) {
     editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-
-    // Pre-load the data
-    DataService.products = ProductsResource.query(function() {
-      console.log(DataService.products);
-    });
-    DataService.parts = PartsResource.query(function() {
-      console.log(DataService.parts);
-    });
-    DataService.boms = BomsResource.query(function () {
-      console.log(DataService.boms);
-    });
-    DataService.types = TypesResource.query(function() {
-      console.log(DataService.types);
-    });
-    DataService.subtypes = SubtypesResource.query(function() {
-      console.log(DataService.subtypes);
-    })
-  });
+   });
