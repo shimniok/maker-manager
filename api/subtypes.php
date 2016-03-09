@@ -12,8 +12,9 @@
 include_once 'base.php';
 require_once __DIR__.'/silex/vendor/autoload.php';
 use Symfony\Component\HttpFoundation\Request;
+use Silex\Application;
 
-$app = new Silex\Application();
+$app = new Application();
 
 $app['debug'] = true;
 
@@ -27,11 +28,11 @@ $app->before(function (Request $request) {
 $columns = array('id', 'name');
 $db = new Data($db, 'subtypes', 'id', $columns);
 
-$app->get('/subtypes', function() use($db, $columns) {
+$app->get('/subtypes', function() use($db) {
   return json_encode($db->query());
 });
 
-$app->get('/subtypes/{id}', function (Silex\Application $app, $id) use ($db, $columns) {
+$app->get('/subtypes/{id}', function ($id) use ($db) {
   return json_encode($db->query('id', $id, 1));
 });
 
@@ -43,4 +44,3 @@ $app->post('/subtypes', function(Request $request) use($db) {
 });
 
 $app->run();
-?>
