@@ -27,6 +27,7 @@ angular.module('MakerMRP', ['ngResource', 'ui.router', 'xeditable'])
         controller: "TypeController"
       })
       .state('subtypes', {
+        url: "/subtypes",
         templateUrl: "templates/subtypes.html",
         controller: "SubtypeController"
       });
