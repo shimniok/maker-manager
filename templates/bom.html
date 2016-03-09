@@ -27,8 +27,8 @@
       <td>{{item.part.value}}</td>
       <td>{{item.part.voltage}}</td>
       <td>{{item.part.tolerance}}</td>
-      <td>{{item.part.types_id}}</td>
-      <td>{{item.part.subtypes_id}}</td>
+      <td>{{data.getTypeName(item.part.types_id)}}</td>
+      <td>{{data.getSubtypeName(item.part.subtypes_id)}}</td>
       <td></td>
     </tr>
 	</tbody>
