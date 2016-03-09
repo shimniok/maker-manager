@@ -3,3 +3,4 @@ config.php
 *.bak
 *.js.map
 .idea/*
+/api/nbproject/private/
