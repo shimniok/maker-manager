@@ -53,7 +53,7 @@
           </td>
           <td>
             <mmrp-add></mmrp-add>
-            <form editable-form name="newform" ng-show="newform.$visible">
+            <form editable-form name="newform" ng-show="newform.$visible" onaftersave="add()">
               <mmrp-save></mmrp-save>
               <mmrp-cancel></mmrp-cancel>
             </form>
