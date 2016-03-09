@@ -21,6 +21,12 @@ angular.module('MakerMRP')
     };
 
     /*
+    $scope.del = function(type) {
+      if (typeof(type) === 'TypesResource') {
+        type.$remove();
+      }
+    };
+
      $scope.remove = function(id){
      console.log('delete(): ', id, $scope.types[id]);
      $http.delete('api/types/'+id).then(function(resp){
