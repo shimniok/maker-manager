@@ -85,18 +85,17 @@ class Data {
      */
     public function add($data) {
         $this->_error = '';
-        $id = array();
 
         // Construct UPDATE SQL statement
-        $newData = array(); // make a new array of valid columns and values
-        $cols = array();    // list of columns for INSERT
-        $values = array();  // list of parameterized values for INSERT
+        $new = array();    // make a new array of valid columns and values
+        $cols = array();   // list of columns for INSERT
+        $values = array(); // list of parameterized values for INSERT
 
         foreach ($data as $col => $value) {
             if (in_array($col, $this->_columns)) { // key is valid column
                 $cols[] = "$col";
                 $values[] = ":$col";
-                $newData[$col] = $value;
+                $new[$col] = $value;
             }
         }
 
@@ -108,16 +107,17 @@ class Data {
             $stmt = $this->_db->prepare($insert);
             // BIND A LIST OF PARAMETERS
             $msg = "add(): " . $insert; // for logging
-            foreach ($newData as $col => $value) {
+            foreach ($new as $col => $value) {
                 // TODO: what to do about param type? PDO::PARAM_STR
                 $stmt->bindValue(":$col", $value); 
                 $msg .= " :$col=$value"; // for logging
             }
 
             if ($stmt->execute()) {
-                $id["id"] = $this->_db->lastInsertId();
+                $new["id"] = $this->_db->lastInsertId();
             } else {
                 $this->_error = implode(' ', $stmt->errorInfo());
+                $new = array();
             }
             $this->writeLog($msg);
             $stmt->closeCursor();
@@ -129,7 +129,7 @@ class Data {
             $this->writeLog($_error);
         }
         
-        return $id;
+        return $new;
     }
 
     /**
