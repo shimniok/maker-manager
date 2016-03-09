@@ -24,7 +24,7 @@ $app->get('/parts', function() use($db, $columns) {
 });
 
 $app->get('/parts/{id}', function (Silex\Application $app, $id) use ($db, $columns) {
-  return json_encode($db->get('id', $id, 1));
+  return json_encode($db->query('id', $id, 1));
 });
 
 $app->run();
