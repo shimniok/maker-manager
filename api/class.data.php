@@ -36,12 +36,11 @@ class Data {
      *
      * @param object $db is the PDO database object
      * @param string $table is the table name
-     * @param string $pkey is the primary key column name
      * @param array $columns is a list of columns
      *
      * @return void
      */   
-    public function __construct($db, $table, $pkey, $columns) {
+    public function __construct($db, $table, $columns) {
         if (is_object($db)) {
             $this->_db = $db;
         } else {
@@ -51,7 +50,6 @@ class Data {
 
         $this->_table = $table;
         $this->_columns = $columns;
-        $this->_pkey = $pkey;
 
         // SELECT SQL statement
         $this->_select = "SELECT * FROM " . $this->_table;
